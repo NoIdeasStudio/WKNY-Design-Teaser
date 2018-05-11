@@ -1,6 +1,6 @@
 const NUM_WORK_IMAGES = 26;
 const WORK_HANG_AMT = 0;
-const WORK_CHANGE_TIMING = 100; // 1000 == 1 second
+const WORK_CHANGE_TIMING = 1000; // 1000 == 1 second
 
 // array of image objects
 var images = [];
