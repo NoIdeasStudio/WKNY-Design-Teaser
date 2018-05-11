@@ -1,6 +1,6 @@
 <!doctype html>
 <html>
-  <head>
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
     <title>WKNY Design Dept.</title>
@@ -8,6 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
     <link rel="stylesheet" href="css/style.css">
+    <script src="js/chance.min.js" charset="utf-8"></script>
+    <script src="js/main.js" charset="utf-8"></script>
 
     <!-- FACEBOOK -->
     <meta property="og:url"                content="http://wknydesign.com" />
@@ -32,12 +34,12 @@
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="theme-color" content="#ffffff">
 
-  </head>
-
+</head>
 <body>
+    <img class="overlayImg hidden" id="overlayImg" alt="overlay">
     <div class="info">
         <h1>
-            This is the <span class="border" id="work" onmouseover="carousel()">WKNY Design</span> Department <br class="hide-mobile">
+            This is the <span class="border" id="work">WKNY Design</span> Department <br class="hide-mobile">
             Website. It represents a portion of the <br class="hide-mobile">
             output of X number of people over the <br class="hide-mobile">
             last X number of days. The WKNY <br class="hide-mobile">
@@ -46,23 +48,6 @@
             making things <span class="border">better</span> for everyone, <br class="hide-mobile">
             but also considerably <span class="border" id="worse">worse.</span>
         </h1>
-        <div class="wkny-work">
-            <img class="slides-slow" src="links/f1_helmets-1.jpg">
-        </div>
-        <div class="wkny-better"></div>
-        <div class="wkny-worse">
-            <img class="slides" src="links/wkny-worse-1.png">
-            <img class="slides" src="links/wkny-worse-2.png">
-            <img class="slides" src="links/wkny-worse-3.png">
-            <img class="slides" src="links/wkny-worse-4.png">
-            <img class="slides" src="links/wkny-worse-5.png">
-            <img class="slides" src="links/wkny-worse-6.png">
-            <img class="slides" src="links/wkny-worse-7.png">
-            <img class="slides" src="links/wkny-worse-8.png">
-            <img class="slides" src="links/wkny-worse-9.png">
-            <img class="slides" src="links/wkny-worse-10.png">
-            <img class="slides" src="links/wkny-worse-11.png">
-        </div>
     </div>
 
     <footer>
@@ -93,8 +78,5 @@
             </div>
         </div>
     </footer>
-
-    <script src="js/hover-effect.js"></script>
-    <script src="js/slideshow.js"></script>
 </body>
 </html>

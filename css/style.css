@@ -230,7 +230,7 @@ footer {
         font-size: 3.8vw;
     }
 
-    .row-one {
+    #row-one {
         margin-bottom: 6%;
     }
 
@@ -250,4 +250,15 @@ footer {
         margin-top: 5%;
     }
 
+}
+
+.overlayImg {
+    position: fixed;
+    pointer-events: none;
+    z-index: 100;
+    height: 100px;
+}
+
+.overlayImg.hidden {
+    display: none;
 }
