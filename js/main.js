@@ -1,5 +1,8 @@
 const NUM_WORK_IMAGES = 26;
+const WORK_HANG_AMT = 100;
+
 var images = [];
+var lastImg;
 
 var overlayImgEl;
 var showWorkInterval;
@@ -7,25 +10,43 @@ var showWorkInterval;
 function showWorkStep() {
     var curImg = images[chance.integer({min:0,max:images.length-1})];
 
+    // make sure the same image isn't selected twice in a row
+    while (typeof lastImg == "number" && lastImg == curImg)
+        curImg = images[chance.integer({min:0,max:images.length-1})];
+    lastImg = curImg;
+
+    // decide image dimentions
     var imgHeight;
     var imgWidth;
-    var curMult = chance.floating({min: 0.3,max: 0.7});
-    if (window.innerWidth > window.innerHeight) {
+    var curMult = chance.floating({min: 0.25,max: 0.6});
+    if (window.innerWidth < window.innerHeight) {
         imgWidth = Math.floor(curMult * window.innerWidth);
-        imgHeight = (curImg.height/curImg.width) * imgWidth;
+        imgHeight = Math.floor((curImg.height/curImg.width) * imgWidth);
     }
     else {
         imgHeight = Math.floor(curMult * window.innerHeight);
-        imgWidth = (curImg.width/curImg.height) * imgWidth;
+        imgWidth = Math.floor((curImg.width/curImg.height) * imgHeight);
+        console.log(imgWidth,imgHeight);
     }
 
-    overlayImgEl.style.top  = chance.integer({min: 0,max: window.innerHeight - imgHeight}) + "px";
-    overlayImgEl.style.left = chance.integer({min: 0,max: window.innerWidth  - imgWidth})  + "px";
+    // allow images to hang off-screen
+    if (WORK_HANG_AMT > 0) {
+        var hHang = imgHeight/WORK_HANG_AMT;
+        var wHang = imgWidth/WORK_HANG_AMT;
+        overlayImgEl.style.top  = chance.integer({min: -hHang,max: window.innerHeight - imgHeight + hHang}) + "px";
+        overlayImgEl.style.left = chance.integer({min: -wHang,max: window.innerWidth  - imgWidth + wHang})  + "px";
+    }
+    else {
+        overlayImgEl.style.top  = chance.integer({min: 0,max: window.innerHeight - imgHeight}) + "px";
+        overlayImgEl.style.left = chance.integer({min: 0,max: window.innerWidth  - imgWidth})  + "px";
+    }
 
+    // set image dimentions
     overlayImgEl.style.height = imgHeight + "px";
     overlayImgEl.style.width  = imgWidth + "px";
     overlayImgEl.src          = curImg.src;
 
+    // make sure image is shown
     overlayImgEl.classList.remove("hidden");
 }
 
@@ -37,7 +58,7 @@ function stopShowWork() {
 function startShowWork() {
     if (showWorkInterval) clearInterval(showWorkInterval);
     showWorkStep();
-    showWorkInterval = setInterval(showWorkStep, 500);
+    showWorkInterval = setInterval(showWorkStep, 1000);
 }
 
 function initWork() {

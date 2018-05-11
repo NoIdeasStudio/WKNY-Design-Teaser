@@ -68,7 +68,7 @@ p {
 }
 
 .border:hover {
-    cursor: pointer;
+    cursor: crosshair;
 }
 
 footer {
