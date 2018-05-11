@@ -1,7 +1,11 @@
 const NUM_WORK_IMAGES = 26;
-const WORK_HANG_AMT = 100;
+const WORK_HANG_AMT = 0;
+const WORK_CHANGE_TIMING = 100; // 1000 == 1 second
 
+// array of image objects
 var images = [];
+
+// previously selected random image index
 var lastImg;
 
 var overlayImgEl;
@@ -27,6 +31,16 @@ function showWorkStep() {
         imgHeight = Math.floor(curMult * window.innerHeight);
         imgWidth = Math.floor((curImg.width/curImg.height) * imgHeight);
         console.log(imgWidth,imgHeight);
+    }
+
+    // constrain image dims to screen size
+    if (window.innerWidth < imgWidth) {
+        imgWidth = window.innerWidth;
+        imgHeight = Math.floor((curImg.height/curImg.width) * imgWidth);
+    }
+    if (window.innerHeight < imgHeight) {
+        imgHeight = window.innerHeight;
+        imgWidth = Math.floor((curImg.width/curImg.height) * imgHeight);
     }
 
     // allow images to hang off-screen
@@ -58,7 +72,7 @@ function stopShowWork() {
 function startShowWork() {
     if (showWorkInterval) clearInterval(showWorkInterval);
     showWorkStep();
-    showWorkInterval = setInterval(showWorkStep, 1000);
+    showWorkInterval = setInterval(showWorkStep, WORK_CHANGE_TIMING);
 }
 
 function initWork() {
@@ -67,13 +81,8 @@ function initWork() {
     workEl.addEventListener("mouseleave",stopShowWork);
 }
 
-function initBetter() {
-
-}
-
-function initWorse() {
-
-}
+function initBetter() {}
+function initWorse() {}
 
 function preloadImages() {
     var baseSrc = "img/work/cooper_hewitt/";
