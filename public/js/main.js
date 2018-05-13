@@ -22,7 +22,6 @@ var lastImgInd;
 /************************** HELPER FUNCTIONS **********************************/
 /******************************************************************************/
 
-
 function shuffle(a) {
     for (let i = a.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -166,6 +165,7 @@ function betterStep() {
     curImgEl.style.height = imgHeight + "px";
     curImgEl.style.width  = imgWidth + "px";
     curImgEl.src          = curImg.src;
+
     document.body.appendChild(curImgEl);
 }
 
@@ -277,6 +277,7 @@ function preloadImages() {
 }
 
 function init() {
+    document.body.classList.add("notMobile");
     preloadImages();
     overlayImgEl = document.getElementById("overlayImg");
     initWork();
@@ -284,4 +285,4 @@ function init() {
     initWorse();
 }
 
-window.onload = init;
+init();

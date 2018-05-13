@@ -56,10 +56,20 @@ p {
     padding-left: .4rem;
 }*/
 
+.mobile .hide-mobile {
+    display: none;
+}
+
+.notMobile .only-mobile {
+    display: none;
+}
+
 .info {
     padding: 3% 2.5%;
     margin-bottom: 8%;
 }
+
+
 
 .border {
     border: 1px solid #000;
@@ -67,14 +77,20 @@ p {
     z-index: 99;
 }
 
-.border:hover {
+.notMobile .border:hover {
     cursor: crosshair;
+    /* color: white;
+    background-color: black; */
 }
 
 footer {
     bottom: 0;
     width: 100%;
     position: fixed;
+}
+
+.ss footer {
+    display: none;
 }
 
 .footer {
@@ -260,5 +276,19 @@ footer {
 }
 
 .overlayImg.hidden {
+    display: none;
+}
+
+.slideShow {
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+    background-color: black;
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.slideShow.hidden {
     display: none;
 }
