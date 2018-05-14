@@ -222,7 +222,6 @@ function worseStep() {
 
     for (var i = 0; i < numSpans; i++) {
         var spanEl = document.getElementById("animSpan_" + i);
-        spanEl.style.color = chance.color();
         spanEl.style.transform =
             "skew(" + chance.integer({min: 0,max: 90}) + "deg, " + chance.integer({min: 0,max: 90}) + "deg)";
         spanEl.style.webkitTransform =
@@ -233,7 +232,7 @@ function worseStep() {
 
 function startWorse() {
     worseStep();
-    worseInterval = setInterval(worseStep, 500);
+    worseInterval = setInterval(worseStep, 300);
     setTimeout(function () {
         document.body.addEventListener("mousemove",stopWorse);
     }, 500);
@@ -248,7 +247,6 @@ function stopWorse(ev) {
             if (worseInterval) clearInterval(worseInterval);
             for (var i = 0; i < numSpans; i++) {
                 var spanEl = document.getElementById("animSpan_" + i);
-                spanEl.style.color = null;
                 spanEl.style.transform = null;
                 spanEl.style.webkitTransform = null;
                 document.getElementById("info").classList.remove("fixWorse");
