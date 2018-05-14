@@ -216,7 +216,7 @@ var worseEl
 var savedBB = false;
 
 function startWorse() {
-    document.body.classList.add("inverted");
+    worseEl.classList.add("active");
     document.getElementById("info").classList.add("fixWorse");
     if (savedBB) return;
     savedBB = worseEl.getBoundingClientRect();
@@ -242,7 +242,7 @@ function stopWorse(ev) {
                 spanEl.style.webkitTransform = null;
                 document.getElementById("info").classList.remove("fixWorse");
                 document.body.removeEventListener("mousemove",stopWorse);
-                document.body.classList.remove("inverted");
+                worseEl.classList.remove("active");
             }
             savedBB = false;
         }

@@ -24,13 +24,6 @@
   color: #fff;
 }
 
-body.inverted {
-    -webkit-filter: invert(100%);
-    -moz-filter: invert(100%);
-    -o-filter: invert(100%);
-    -ms-filter: invert(100%);
-}
-
 h1 {
     font-family: 'Riccione-Xlight', 'Times New Roman', times, serif;
     font-size: 5.6vw;
@@ -93,6 +86,12 @@ p {
     border: 1px solid #000;
     padding: 0% 1%;
     z-index: 99;
+    transition: color 0.3s, background-color 0.3s;
+}
+
+.border.active {
+    color: white;
+    background-color: black;
 }
 
 .notMobile .border:hover {
