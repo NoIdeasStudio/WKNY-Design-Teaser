@@ -222,7 +222,6 @@ function startWorse() {
 
     for (var i = 0; i < numSpans; i++) {
         var spanEl = document.getElementById("animSpan_" + i);
-        spanEl.style.color = chance.color();
         spanEl.style.transform =
             "skew(" + chance.integer({min: 0,max: 90}) + "deg, " + chance.integer({min: 0,max: 90}) + "deg)";
         spanEl.style.webkitTransform =
@@ -240,7 +239,6 @@ function stopWorse(ev) {
         if (out) {
             for (var i = 0; i < numSpans; i++) {
                 var spanEl = document.getElementById("animSpan_" + i);
-                spanEl.style.color = null;
                 spanEl.style.transform = null;
                 spanEl.style.webkitTransform = null;
                 document.getElementById("info").classList.remove("fixWorse");
