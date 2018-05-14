@@ -222,11 +222,12 @@ function startWorse() {
 
     for (var i = 0; i < numSpans; i++) {
         var spanEl = document.getElementById("animSpan_" + i);
-        spanEl.style.color = chance.color();
         spanEl.style.transform =
-            "skew(" + chance.integer({min: 0,max: 90}) + "deg, " + chance.integer({min: 0,max: 90}) + "deg)";
+            "translate(" + chance.integer({min: -90,max: 90}) + "px, " + chance.integer({min: -90,max: 90}) + "px) " +
+            "rotate3d(" + chance.integer({min: 0,max: 1}) + "," + chance.integer({min: 0,max: 1}) + "," + chance.integer({min: 0,max: 1}) + "," + chance.integer({min: 0,max: 90}) + "deg)";
         spanEl.style.webkitTransform =
-            "skew(" + chance.integer({min: 0,max: 90}) + "deg, " + chance.integer({min: 0,max: 90}) + "deg)";
+            "translate(" + chance.integer({min: -90,max: 90}) + "px, " + chance.integer({min: -90,max: 90}) + "px) " +
+            "rotate3d(" + chance.integer({min: 0,max: 1}) + "," + chance.integer({min: 0,max: 1}) + "," + chance.integer({min: 0,max: 1}) + "," + chance.integer({min: 0,max: 90}) + "deg)";
     }
     setTimeout(function () {
         document.body.addEventListener("mousemove",stopWorse);
@@ -240,7 +241,6 @@ function stopWorse(ev) {
         if (out) {
             for (var i = 0; i < numSpans; i++) {
                 var spanEl = document.getElementById("animSpan_" + i);
-                spanEl.style.color = null;
                 spanEl.style.transform = null;
                 spanEl.style.webkitTransform = null;
                 document.getElementById("info").classList.remove("fixWorse");
