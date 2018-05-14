@@ -214,11 +214,11 @@ function initBetter() {
 var numSpans;
 var worseEl
 var savedBB = false;
+var worseInterval;
 
-function startWorse() {
+function worseStep() {
     document.getElementById("info").classList.add("fixWorse");
-    if (savedBB) return;
-    savedBB = worseEl.getBoundingClientRect();
+    if (!savedBB) savedBB = worseEl.getBoundingClientRect();
 
     for (var i = 0; i < numSpans; i++) {
         var spanEl = document.getElementById("animSpan_" + i);
@@ -228,6 +228,12 @@ function startWorse() {
         spanEl.style.webkitTransform =
             "skew(" + chance.integer({min: 0,max: 90}) + "deg, " + chance.integer({min: 0,max: 90}) + "deg)";
     }
+    console.log("ding");
+}
+
+function startWorse() {
+    worseStep();
+    worseInterval = setInterval(worseStep, 500);
     setTimeout(function () {
         document.body.addEventListener("mousemove",stopWorse);
     }, 500);
@@ -238,6 +244,8 @@ function stopWorse(ev) {
         var out = (ev.clientX < savedBB.left) || (ev.clientX > savedBB.left + savedBB.width) ||
                   (ev.clientY < savedBB.top) || (ev.clientY > savedBB.top + savedBB.height);
         if (out) {
+            console.log("out");
+            if (worseInterval) clearInterval(worseInterval);
             for (var i = 0; i < numSpans; i++) {
                 var spanEl = document.getElementById("animSpan_" + i);
                 spanEl.style.color = null;
