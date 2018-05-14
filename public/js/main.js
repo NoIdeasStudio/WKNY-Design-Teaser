@@ -233,7 +233,7 @@ function worseStep() {
 
 function startWorse() {
     worseStep();
-    worseInterval = setInterval(worseStep, 500);
+    worseInterval = setInterval(worseStep, 300);
     setTimeout(function () {
         document.body.addEventListener("mousemove",stopWorse);
     }, 500);
