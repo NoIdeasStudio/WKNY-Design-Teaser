@@ -65,11 +65,21 @@ p {
 }
 
 .info {
+    position: fixed;
     padding: 3% 2.5%;
-    margin-bottom: 8%;
+    overflow: hidden;
+    overflow-y: scroll;
+    width: 100%;
 }
 
+.info.fixWorse {
+    overflow-y: hidden;
+}
 
+.info h1 {
+    max-height: 100%;
+    overflow: visible;
+}
 
 .border {
     border: 1px solid #000;
@@ -79,8 +89,8 @@ p {
 
 .notMobile .border:hover {
     cursor: crosshair;
-    /* color: white;
-    background-color: black; */
+    color: white;
+    background-color: black;
 }
 
 footer {
@@ -113,6 +123,7 @@ footer {
     right: 0;
     text-align: right;
     position: relative;
+    pointer-events: none;
 }
 
 .logo img {
@@ -297,4 +308,5 @@ footer {
     transition: top 0.3s, left 0.3s, font-size 0.3s, transform 0.3s, color 0.3s;
     display: inline-block;
     white-space: pre;
+    pointer-events: none;
 }

@@ -22,15 +22,10 @@ function slideShowStep() {
 
     var ssEl = document.getElementById("slideShow");
     ssEl.style.backgroundImage = "url(" + curImg.src + ")";
-
-    slideShow.classList.remove("hidden");
-    document.body.classList.add("ss");
 }
 
 function stopSlideShow() {
     if (slideShowInterval) clearInterval(slideShowInterval);
-    slideShow.classList.add("hidden");
-    document.body.classList.remove("ss");
 }
 
 function startSlideShow() {
@@ -67,6 +62,7 @@ function init() {
     setTimeout(function () {
         window.addEventListener("orientationchange", handleOrientationChange);
     }, 1000);
+    document.body.classList.add("mobile");
 }
 
 init();

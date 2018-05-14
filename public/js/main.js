@@ -183,7 +183,6 @@ function betterStep() {
 
 function betterStopStep(i) {
     setTimeout(function () {
-        console.log(i);
         var curRem = document.getElementById("better_" + i);
         if (curRem) curRem.parentNode.removeChild(curRem);
     }, Math.floor(700 / betterNumShown) * (betterNumShown - 1 - i));
@@ -217,10 +216,10 @@ var worseEl
 var savedBB = false;
 
 function startWorse() {
+    document.getElementById("info").classList.add("fixWorse");
     if (savedBB) return;
     savedBB = worseEl.getBoundingClientRect();
 
-    console.log(numSpans);
     for (var i = 0; i < numSpans; i++) {
         var spanEl = document.getElementById("animSpan_" + i);
         spanEl.style.color = chance.color();
@@ -229,6 +228,9 @@ function startWorse() {
         spanEl.style.webkitTransform =
             "skew(" + chance.integer({min: 0,max: 90}) + "deg, " + chance.integer({min: 0,max: 90}) + "deg)";
     }
+    setTimeout(function () {
+        document.body.addEventListener("mousemove",stopWorse);
+    }, 500);
 }
 
 function stopWorse(ev) {
@@ -241,6 +243,8 @@ function stopWorse(ev) {
                 spanEl.style.color = null;
                 spanEl.style.transform = null;
                 spanEl.style.webkitTransform = null;
+                document.getElementById("info").classList.remove("fixWorse");
+                document.body.removeEventListener("mousemove",stopWorse);
             }
             savedBB = false;
         }
@@ -283,7 +287,6 @@ function initWorse() {
 
     worseEl = document.getElementsByClassName("worse")[0];
     worseEl.addEventListener("mouseenter",startWorse);
-    document.body.addEventListener("mousemove",stopWorse);
 }
 
 /******************************************************************************/
@@ -318,7 +321,6 @@ function init() {
     initWorse();
     initWork();
     initBetter();
-
 }
 
 init();
