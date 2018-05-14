@@ -223,9 +223,9 @@ function startWorse() {
     for (var i = 0; i < numSpans; i++) {
         var spanEl = document.getElementById("animSpan_" + i);
         spanEl.style.transform =
-            "skew(" + chance.integer({min: 0,max: 90}) + "deg, " + chance.integer({min: 0,max: 90}) + "deg)";
+            "skew(" + chance.integer({min: -90,max: 90}) + "deg, " + chance.integer({min: -90,max: 90}) + "deg)";
         spanEl.style.webkitTransform =
-            "skew(" + chance.integer({min: 0,max: 90}) + "deg, " + chance.integer({min: 0,max: 90}) + "deg)";
+            "skew(" + chance.integer({min: -90,max: 90}) + "deg, " + chance.integer({min: -90,max: 90}) + "deg)";
     }
     setTimeout(function () {
         document.body.addEventListener("mousemove",stopWorse);
