@@ -203,8 +203,8 @@ function startBetter() {
 
 function initBetter() {
     var betterEl = document.getElementsByClassName("better")[0];
-    betterEl.addEventListener("mouseenter",startBetter);
-    betterEl.addEventListener("mouseleave",stopBetter);
+    betterEl.addEventListener("mouseenter",stopWorse);
+    // betterEl.addEventListener("mouseleave",stopBetter);
 }
 
 /******************************************************************************/
@@ -216,6 +216,7 @@ var worseEl
 var savedBB = false;
 
 function startWorse() {
+    document.body.classList.add("inverted");
     document.getElementById("info").classList.add("fixWorse");
     if (savedBB) return;
     savedBB = worseEl.getBoundingClientRect();
@@ -227,22 +228,21 @@ function startWorse() {
         spanEl.style.webkitTransform =
             "skew(" + chance.integer({min: -90,max: 90}) + "deg, " + chance.integer({min: -90,max: 90}) + "deg)";
     }
-    setTimeout(function () {
-        document.body.addEventListener("mousemove",stopWorse);
-    }, 500);
 }
 
 function stopWorse(ev) {
     if (savedBB) {
-        var out = (ev.clientX < savedBB.left) || (ev.clientX > savedBB.left + savedBB.width) ||
+        var out;
+        if (ev) out = (ev.clientX < savedBB.left) || (ev.clientX > savedBB.left + savedBB.width) ||
                   (ev.clientY < savedBB.top) || (ev.clientY > savedBB.top + savedBB.height);
-        if (out) {
+        if (out || !ev) {
             for (var i = 0; i < numSpans; i++) {
                 var spanEl = document.getElementById("animSpan_" + i);
                 spanEl.style.transform = null;
                 spanEl.style.webkitTransform = null;
                 document.getElementById("info").classList.remove("fixWorse");
                 document.body.removeEventListener("mousemove",stopWorse);
+                document.body.classList.remove("inverted");
             }
             savedBB = false;
         }
