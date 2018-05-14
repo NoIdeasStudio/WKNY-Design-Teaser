@@ -292,3 +292,9 @@ footer {
 .slideShow.hidden {
     display: none;
 }
+
+.animSpan {
+    transition: top 0.3s, left 0.3s, font-size 0.3s, transform 0.3s, color 0.3s;
+    display: inline-block;
+    white-space: pre;
+}

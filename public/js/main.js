@@ -30,6 +30,18 @@ function shuffle(a) {
     return a;
 }
 
+function stringToElement(htmlString) {
+  var div = document.createElement('div');
+  div.innerHTML = htmlString.trim();
+  return div.firstChild;
+}
+
+function elementToString(element) {
+  var div = document.createElement('div');
+  div.appendChild(element);
+  return div.innerHTML;
+}
+
 /******************************************************************************/
 /************************** WORK **********************************************/
 /******************************************************************************/
@@ -101,7 +113,7 @@ function startShowWork() {
 }
 
 function initWork() {
-    var workEl = document.getElementById("work");
+    var workEl = document.getElementsByClassName("work")[0];
     workEl.addEventListener("mouseenter",startShowWork);
     workEl.addEventListener("mouseleave",stopShowWork);
 }
@@ -191,7 +203,7 @@ function startBetter() {
 }
 
 function initBetter() {
-    var betterEl = document.getElementById("better");
+    var betterEl = document.getElementsByClassName("better")[0];
     betterEl.addEventListener("mouseenter",startBetter);
     betterEl.addEventListener("mouseleave",stopBetter);
 }
@@ -200,55 +212,78 @@ function initBetter() {
 /************************** WORSE *********************************************/
 /******************************************************************************/
 
-var worseInterval;
-
-function worseStep() {
-    var curImgInd = chance.integer({min:0,max:worseImages.length-1});
-    // make sure the same image isn't selected twice in a row
-    while (typeof lastImgInd == "number" && lastImgInd == curImgInd)
-        curImgInd = chance.integer({min:0,max:worseImages.length-1});
-    lastImgInd = curImgInd;
-    var curImg = worseImages[curImgInd];
-
-    // decide image dimentions
-    var curMult = chance.floating({min: 1.1,max: 1.5});
-    var imgHeight;
-    var imgWidth;
-    if (chance.bool()) {
-        imgHeight = window.innerHeight * curMult;
-        imgWidth = Math.floor((curImg.width/curImg.height) * imgHeight);
-    }
-    else {
-        imgWidth = window.innerWidth * curMult;
-        imgHeight = Math.floor((curImg.height/curImg.width) * imgWidth);
-    }
-
-    overlayImgEl.style.top  = (-(imgHeight - window.innerHeight)/2) + "px";
-    overlayImgEl.style.left = (-(imgWidth  - window.innerWidth)/2)  + "px";
-
-    // set image dimentions
-    overlayImgEl.style.height = imgHeight + "px";
-    overlayImgEl.style.width  = imgWidth + "px";
-    overlayImgEl.src          = curImg.src;
-
-    overlayImgEl.classList.remove("hidden");
-}
+var numSpans;
+var worseEl
+var savedBB = false;
 
 function startWorse() {
-    if (worseInterval) clearInterval(worseInterval);
-    worseStep();
-    worseInterval = setInterval(worseStep, WORSE_CHANGE_TIMING);
+    if (savedBB) return;
+    savedBB = worseEl.getBoundingClientRect();
+
+    console.log(numSpans);
+    for (var i = 0; i < numSpans; i++) {
+        var spanEl = document.getElementById("animSpan_" + i);
+        spanEl.style.color = chance.color();
+        spanEl.style.transform =
+            "skew(" + chance.integer({min: 0,max: 90}) + "deg, " + chance.integer({min: 0,max: 90}) + "deg)";
+        spanEl.style.webkitTransform =
+            "skew(" + chance.integer({min: 0,max: 90}) + "deg, " + chance.integer({min: 0,max: 90}) + "deg)";
+    }
 }
 
-function stopWorse() {
-    clearInterval(worseInterval);
-    overlayImgEl.classList.add("hidden");
+function stopWorse(ev) {
+    if (savedBB) {
+        var out = (ev.clientX < savedBB.left) || (ev.clientX > savedBB.left + savedBB.width) ||
+                  (ev.clientY < savedBB.top) || (ev.clientY > savedBB.top + savedBB.height);
+        if (out) {
+            for (var i = 0; i < numSpans; i++) {
+                var spanEl = document.getElementById("animSpan_" + i);
+                spanEl.style.color = null;
+                spanEl.style.transform = null;
+                spanEl.style.webkitTransform = null;
+            }
+            savedBB = false;
+        }
+    }
 }
 
 function initWorse() {
-    var worseEl = document.getElementById("worse");
+    textNodes = [...document.getElementById("infoText").childNodes];
+
+    numSpans = 0;
+
+    var replaceText = "";
+
+    for (var i = 0; i < textNodes.length; i++) {
+        if (!textNodes[i].tagName) {
+            var text = textNodes[i].textContent.trim();
+            var newText = "";
+            var tokens = text.split(/\s+/);
+            for (var j = 0; j < tokens.length; j++) {
+                var newSpan = document.createElement("span");
+                newSpan.id = "animSpan_" + numSpans;
+                newSpan.classList.add("animSpan");
+                newSpan.innerHTML = tokens[j] + " ";
+                newText += elementToString(newSpan);
+                numSpans++;
+            }
+            replaceText += newText;
+        }
+        else if (textNodes[i].tagName == "SPAN") {
+            // uncomment to also change the words with borders
+            // textNodes[i].id = "animSpan_" + numSpans;
+            // textNodes[i].classList.add("animSpan");
+            // numSpans++;
+            replaceText += elementToString(textNodes[i]) + " ";
+        }
+        else replaceText += elementToString(textNodes[i]) + " ";
+    }
+
+    document.getElementById("infoText").innerHTML = replaceText;
+
+    worseEl = document.getElementsByClassName("worse")[0];
     worseEl.addEventListener("mouseenter",startWorse);
-    worseEl.addEventListener("mouseleave",stopWorse);
+    document.body.addEventListener("mousemove",stopWorse);
 }
 
 /******************************************************************************/
@@ -280,9 +315,10 @@ function init() {
     document.body.classList.add("notMobile");
     preloadImages();
     overlayImgEl = document.getElementById("overlayImg");
+    initWorse();
     initWork();
     initBetter();
-    initWorse();
+
 }
 
 init();

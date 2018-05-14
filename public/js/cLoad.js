@@ -9,7 +9,6 @@ function chooseJS() {
     var js = document.createElement("script");
 
     js.type = "text/javascript";
-    console.log(isMobile());
     if (isMobile()) js.src = "js/mobile.js";
     else js.src = "js/main.js";
 
