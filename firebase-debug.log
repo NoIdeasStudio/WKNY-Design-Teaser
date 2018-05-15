@@ -21,3 +21,38 @@
 [info] 
 [info] i  deploying hosting
 [info] i  hosting: preparing public directory for upload...
+[debug] [2018-05-15T02:13:35.820Z] ----------------------------------------------------------------------
+[debug] [2018-05-15T02:13:35.822Z] Command:       /usr/local/Cellar/node/9.11.1/bin/node /usr/local/bin/firebase deploy
+[debug] [2018-05-15T02:13:35.822Z] CLI Version:   3.18.4
+[debug] [2018-05-15T02:13:35.822Z] Platform:      darwin
+[debug] [2018-05-15T02:13:35.822Z] Node Version:  v9.11.1
+[debug] [2018-05-15T02:13:35.823Z] Time:          Mon May 14 2018 22:13:35 GMT-0400 (EDT)
+[debug] [2018-05-15T02:13:35.823Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2018-05-15T02:13:35.833Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-05-15T02:13:35.833Z] > authorizing via signed-in user
+[debug] [2018-05-15T02:13:35.834Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2018-05-15T02:13:35.835Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ { refresh_token: '1/V6jNryOD5t5S8U3Pguxi4UVqJbSUvJ14zKchBOYut9w',
+  client_id: '563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com',
+  client_secret: 'j9iVZfS8kkCEFUPaAeJV0sAi',
+  grant_type: 'refresh_token',
+  scope: 'email https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/cloudplatformprojects.readonly https://www.googleapis.com/auth/firebase openid' } 
+ Mon May 14 2018 22:13:35 GMT-0400 (EDT)
+[debug] [2018-05-15T02:13:36.052Z] <<< HTTP RESPONSE 200
+[debug] [2018-05-15T02:13:36.081Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/wkny-2f816  
+  
+ Mon May 14 2018 22:13:36 GMT-0400 (EDT)
+[debug] [2018-05-15T02:13:36.443Z] <<< HTTP RESPONSE 200
+[debug] [2018-05-15T02:13:36.444Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/wkny-2f816/tokens  
+  
+ Mon May 14 2018 22:13:36 GMT-0400 (EDT)
+[debug] [2018-05-15T02:13:36.831Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Deploying to 'wkny-2f816'...
+[info] 
+[info] i  deploying hosting
+[info] i  hosting: preparing public directory for upload...
+[debug] [2018-05-15T02:13:48.423Z] >>> HTTP REQUEST PUT https://deploy.firebase.com/v1/hosting/wkny-2f816/uploads/-LCWZkmhvJmmPPlpulEr?fileCount=136&message=  
+  
+ Mon May 14 2018 22:13:48 GMT-0400 (EDT)

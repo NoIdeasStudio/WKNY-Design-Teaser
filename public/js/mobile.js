@@ -37,12 +37,8 @@ function startSlideShow() {
 }
 
 function handleOrientationChange() {
-    if (screen.orientation.angle == 90 || screen.orientation.angle == 270) {
-        startSlideShow();
-    }
-    else {
-        stopSlideShow();
-    }
+    if (window.innerHeight < window.innerWidth) startSlideShow();
+    else stopSlideShow();
 }
 
 function preloadImages() {
@@ -60,8 +56,10 @@ function preloadImages() {
 function init() {
     preloadImages();
     setTimeout(function () {
-        window.addEventListener("orientationchange", handleOrientationChange);
+        handleOrientationChange();
+        window.onresize = handleOrientationChange;
     }, 1000);
+
     document.body.classList.add("mobile");
 }
 
