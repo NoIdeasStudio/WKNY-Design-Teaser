@@ -47,10 +47,11 @@ function startSlideShow() {
 
 function handleOrientationChange() {
     if (window.innerHeight < window.innerWidth && orientation != LANDSCAPE) {
+        if (document.body.classList.contains("ss")) return;
         startSlideShow();
         orientation = LANDSCAPE;
     }
-    else if (orientation != PORTRAIT) {
+    else if (window.innerHeight >= window.innerWidth && orientation != PORTRAIT) {
         stopSlideShow();
         orientation = PORTRAIT;
     }

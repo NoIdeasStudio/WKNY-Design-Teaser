@@ -1,26 +1,67 @@
-[debug] [2018-05-15T15:28:37.095Z] ----------------------------------------------------------------------
-[debug] [2018-05-15T15:28:37.097Z] Command:       /usr/local/Cellar/node/9.11.1/bin/node /usr/local/bin/firebase deploy
-[debug] [2018-05-15T15:28:37.098Z] CLI Version:   3.18.4
-[debug] [2018-05-15T15:28:37.098Z] Platform:      darwin
-[debug] [2018-05-15T15:28:37.098Z] Node Version:  v9.11.1
-[debug] [2018-05-15T15:28:37.098Z] Time:          Tue May 15 2018 11:28:37 GMT-0400 (EDT)
-[debug] [2018-05-15T15:28:37.098Z] ----------------------------------------------------------------------
+[debug] [2018-05-15T16:01:32.023Z] ----------------------------------------------------------------------
+[debug] [2018-05-15T16:01:32.025Z] Command:       /usr/local/Cellar/node/9.11.1/bin/node /usr/local/bin/firebase deploy
+[debug] [2018-05-15T16:01:32.025Z] CLI Version:   3.18.4
+[debug] [2018-05-15T16:01:32.025Z] Platform:      darwin
+[debug] [2018-05-15T16:01:32.025Z] Node Version:  v9.11.1
+[debug] [2018-05-15T16:01:32.025Z] Time:          Tue May 15 2018 12:01:32 GMT-0400 (EDT)
+[debug] [2018-05-15T16:01:32.025Z] ----------------------------------------------------------------------
 [debug] 
-[debug] [2018-05-15T15:28:37.106Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
-[debug] [2018-05-15T15:28:37.107Z] > authorizing via signed-in user
-[debug] [2018-05-15T15:28:37.108Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/wkny-2f816  
+[debug] [2018-05-15T16:01:32.035Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-05-15T16:01:32.035Z] > authorizing via signed-in user
+[debug] [2018-05-15T16:01:32.037Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/wkny-2f816  
   
- Tue May 15 2018 11:28:37 GMT-0400 (EDT)
-[debug] [2018-05-15T15:28:37.462Z] <<< HTTP RESPONSE 200
-[debug] [2018-05-15T15:28:37.463Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/wkny-2f816/tokens  
+ Tue May 15 2018 12:01:32 GMT-0400 (EDT)
+[debug] [2018-05-15T16:01:32.352Z] <<< HTTP RESPONSE 200
+[debug] [2018-05-15T16:01:32.353Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/wkny-2f816/tokens  
   
- Tue May 15 2018 11:28:37 GMT-0400 (EDT)
-[debug] [2018-05-15T15:28:37.813Z] <<< HTTP RESPONSE 200
+ Tue May 15 2018 12:01:32 GMT-0400 (EDT)
+[debug] [2018-05-15T16:01:32.749Z] <<< HTTP RESPONSE 200
 [info] 
 [info] === Deploying to 'wkny-2f816'...
 [info] 
 [info] i  deploying hosting
 [info] i  hosting: preparing public directory for upload...
-[debug] [2018-05-15T15:28:49.149Z] >>> HTTP REQUEST PUT https://deploy.firebase.com/v1/hosting/wkny-2f816/uploads/-LCZPiXYgzondxJf6Een?fileCount=136&message=  
+[debug] [2018-05-15T16:01:43.952Z] >>> HTTP REQUEST PUT https://deploy.firebase.com/v1/hosting/wkny-2f816/uploads/-LCZXFg3Y07vppzgUd9P?fileCount=136&message=  
   
- Tue May 15 2018 11:28:49 GMT-0400 (EDT)
+ Tue May 15 2018 12:01:43 GMT-0400 (EDT)
+[debug] [2018-05-15T16:02:34.609Z] <<< HTTP RESPONSE 200
+[debug] [2018-05-15T16:02:34.609Z] [hosting] .tgz uploaded successfully, waiting for extraction
+[info] ✔  hosting: 136 files uploaded successfully
+[debug] [2018-05-15T16:02:35.674Z] [hosting] deploy completed after 62719ms
+[debug] [2018-05-15T16:02:35.681Z] >>> HTTP REQUEST POST https://deploy.firebase.com/v1/projects/wkny-2f816/releases  
+ { hosting: 
+   { public: 'public',
+     ignore: [ 'firebase.json', '**/.*', '**/node_modules/**' ],
+     version: '-LCZXFg3Y07vppzgUd9P',
+     prefix: '-LCZXFg3Y07vppzgUd9P/',
+     manifest: [] } } 
+ Tue May 15 2018 12:02:35 GMT-0400 (EDT)
+[debug] [2018-05-15T16:02:35.811Z] <<< HTTP RESPONSE 502
+[debug] [2018-05-15T16:02:35.811Z] <<< HTTP RESPONSE BODY <html>
+<head><title>502 Bad Gateway</title></head>
+<body bgcolor="white">
+<center><h1>502 Bad Gateway</h1></center>
+<hr><center>nginx</center>
+</body>
+</html>
+
+[debug] [2018-05-15T16:02:35.813Z] TypeError: Cannot create property 'error' on string '<html>
+<head><title>502 Bad Gateway</title></head>
+<body bgcolor="white">
+<center><h1>502 Bad Gateway</h1></center>
+<hr><center>nginx</center>
+</body>
+</html>
+'
+    at module.exports (/usr/local/lib/node_modules/firebase-tools/lib/responseToError.js:11:16)
+    at Request._callback (/usr/local/lib/node_modules/firebase-tools/lib/api.js:47:25)
+    at Request.self.callback (/usr/local/lib/node_modules/firebase-tools/node_modules/request/request.js:186:22)
+    at Request.emit (events.js:180:13)
+    at Request.emit (domain.js:422:20)
+    at Request.<anonymous> (/usr/local/lib/node_modules/firebase-tools/node_modules/request/request.js:1163:10)
+    at Request.emit (events.js:180:13)
+    at Request.emit (domain.js:422:20)
+    at IncomingMessage.<anonymous> (/usr/local/lib/node_modules/firebase-tools/node_modules/request/request.js:1085:12)
+    at Object.onceWrapper (events.js:272:13)
+[error] 
+[error] Error: An unexpected error has occurred.
