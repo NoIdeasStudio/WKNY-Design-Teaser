@@ -306,7 +306,7 @@ footer {
 }
 
 .animSpan {
-    transition: transform 0.3s;
+    transition: transform 0.3s, font-size 0.5s;
 
     display: inline-block;
     white-space: pre;

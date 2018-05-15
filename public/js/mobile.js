@@ -26,6 +26,7 @@ function slideShowStep() {
 }
 
 function stopSlideShow() {
+    var ssEl = document.getElementById("slideShow");
     ssEl.classList.add("hidden");
     if (slideShowInterval) clearInterval(slideShowInterval);
 }
