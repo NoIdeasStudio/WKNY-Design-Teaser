@@ -321,6 +321,11 @@ footer {
     -moz-transition: -webkit-transform 0.3s, transform 0.3s, font-size 0.3s;
     -o-transition: -webkit-transform 0.3s, transform 0.3s, font-size 0.3s;
 
+    /* transition-timing-function: linear;
+    -webkit-transition-timing-function: linear;
+    -moz-transition-timing-function: linear;
+    -o-transition-timing-function: linear; */
+
     display: inline-block;
     white-space: pre;
     pointer-events: none;

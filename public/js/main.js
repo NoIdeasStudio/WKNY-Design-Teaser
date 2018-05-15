@@ -9,7 +9,7 @@ const IMG_OVERLAY_HANG_AMT = 0;
 
 const WORK_CHANGE_TIMING   = 1000; // 1000 == 1 second
 const BETTER_CHANGE_TIMING = 150;
-const WORSE_CHANGE_TIMING  = 150;
+const WORSE_CHANGE_TIMING  = 300;
 
 const SKEW_AMT             = 90;
 
@@ -216,6 +216,10 @@ function initBetter() {
 var numSpans;
 var worseEl
 var savedBB = false;
+var allowWorseStop = false;
+var worseMouseOut = false;
+
+var worseImagesInterval;
 
 function skewSpanEl(i) {
     window.requestAnimationFrame(function () {
@@ -234,29 +238,77 @@ function skewSpanEl(i) {
     });
 }
 
+function skewAllSpans() {
+    for (var i = 0; i < numSpans; i++) skewSpanEl(i);
+}
+
+function worseImagesStep() {
+    var curImgInd = chance.integer({min:0,max:worseImages.length-1});
+    // make sure the same image isn't selected twice in a row
+    while (typeof lastImgInd == "number" && lastImgInd == curImgInd)
+        curImgInd = chance.integer({min:0,max:worseImages.length-1});
+    lastImgInd = curImgInd;
+    var curImg = worseImages[curImgInd];
+
+    // decide image dimentions
+    var curMult = chance.floating({min: 1.1,max: 1.5});
+    var imgHeight;
+    var imgWidth;
+    if (chance.bool()) {
+        imgHeight = window.innerHeight * curMult;
+        imgWidth = Math.floor((curImg.width/curImg.height) * imgHeight);
+    }
+    else {
+        imgWidth = window.innerWidth * curMult;
+        imgHeight = Math.floor((curImg.height/curImg.width) * imgWidth);
+    }
+
+    overlayImgEl.style.top  = (-(imgHeight - window.innerHeight)/2) + "px";
+    overlayImgEl.style.left = (-(imgWidth  - window.innerWidth)/2)  + "px";
+
+    // set image dimentions
+    overlayImgEl.style.height = imgHeight + "px";
+    overlayImgEl.style.width  = imgWidth + "px";
+    overlayImgEl.src          = curImg.src;
+
+    overlayImgEl.classList.remove("hidden");
+    // skewAllSpans();
+}
+
 function startWorse() {
-    document.getElementById("info").classList.add("fixWorse");
     if (savedBB) return;
+    document.getElementById("info").classList.add("fixWorse");
     savedBB = worseEl.getBoundingClientRect();
 
-    for (var i = 0; i < numSpans; i++) skewSpanEl(i);
+    document.getElementById("info").classList.add("fixWorse");
 
-    setTimeout(function () {
-        document.body.addEventListener("mousemove",stopWorse);
-    }, 500);
+    // if (!worseImagesInterval) {
+    //     worseImagesStep();
+    //     worseImagesInterval = setInterval(worseImagesStep, WORSE_CHANGE_TIMING);
+    // }
+
+    skewAllSpans();
+    worseMouseOut = false;
+    allowWorseStop = false;
+
+    if (!allowWorseStop) setTimeout(function () {
+        allowWorseStop = true;
+    }, 100);
 }
 
 function stopWorse(ev) {
     if (savedBB) {
-        var out = (ev.clientX < savedBB.left) || (ev.clientX > savedBB.left + savedBB.width) ||
+        worseMouseOut = (ev.clientX < savedBB.left) || (ev.clientX > savedBB.left + savedBB.width) ||
                   (ev.clientY < savedBB.top) || (ev.clientY > savedBB.top + savedBB.height);
-        if (out) {
+        if (worseMouseOut && allowWorseStop) {
             for (var i = 0; i < numSpans; i++) {
                 var spanEl = document.getElementById("animSpan_" + i);
                 spanEl.classList.add("slow");
                 spanEl.style = null;
                 document.getElementById("info").classList.remove("fixWorse");
-                document.body.removeEventListener("mousemove",stopWorse);
+                clearInterval(worseImagesInterval);
+                worseImagesInterval = false;
+                overlayImgEl.classList.add("hidden");
             }
             savedBB = false;
         }
@@ -299,6 +351,7 @@ function initWorse() {
 
     worseEl = document.getElementsByClassName("worse")[0];
     worseEl.addEventListener("mouseenter",startWorse);
+    document.body.addEventListener("mousemove",stopWorse);
 }
 
 /******************************************************************************/
