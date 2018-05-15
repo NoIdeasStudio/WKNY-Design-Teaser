@@ -11,6 +11,8 @@ const WORK_CHANGE_TIMING   = 1000; // 1000 == 1 second
 const BETTER_CHANGE_TIMING = 150;
 const WORSE_CHANGE_TIMING  = 150;
 
+const SKEW_AMT             = 90;
+
 /******************************************************************************/
 /************************** GLOBALS *******************************************/
 /******************************************************************************/
@@ -222,10 +224,11 @@ function startWorse() {
 
     for (var i = 0; i < numSpans; i++) {
         var spanEl = document.getElementById("animSpan_" + i);
+        spanEl.classList.remove("slow");
         spanEl.style.transform =
-            "skew(" + chance.integer({min: -90,max: 90}) + "deg, " + chance.integer({min: -90,max: 90}) + "deg)";
+            "skew(" + chance.integer({min: -SKEW_AMT,max: SKEW_AMT}) + "deg, " + chance.integer({min: -SKEW_AMT,max: SKEW_AMT}) + "deg)";
         spanEl.style.webkitTransform =
-            "skew(" + chance.integer({min: -90,max: 90}) + "deg, " + chance.integer({min: -90,max: 90}) + "deg)";
+            "skew(" + chance.integer({min: -SKEW_AMT,max: SKEW_AMT}) + "deg, " + chance.integer({min: -SKEW_AMT,max: SKEW_AMT}) + "deg)";
     }
     setTimeout(function () {
         document.body.addEventListener("mousemove",stopWorse);
@@ -239,6 +242,7 @@ function stopWorse(ev) {
         if (out) {
             for (var i = 0; i < numSpans; i++) {
                 var spanEl = document.getElementById("animSpan_" + i);
+                spanEl.classList.add("slow");
                 spanEl.style.transform = null;
                 spanEl.style.webkitTransform = null;
                 document.getElementById("info").classList.remove("fixWorse");
