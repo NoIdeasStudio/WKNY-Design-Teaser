@@ -1,9 +1,13 @@
 const NUM_WORK_IMAGES = 26;
+const LANDSCAPE       = "L";
+const PORTRAIT        = "P";
 
 var workImages = [];
 
 var slideShowInterval;
 var ssQueue;
+
+var orientation = false;
 
 function shuffle(a) {
     for (let i = a.length - 1; i > 0; i--) {
@@ -35,16 +39,21 @@ function stopSlideShow() {
 }
 
 function startSlideShow() {
-    if (slideShowInterval) return;
+    if (slideShowInterval) clearInterval(slideShowInterval);
     ssQueue = shuffle([...Array(NUM_WORK_IMAGES).keys()]);
-    console.log(ssQueue);
     slideShowStep();
     slideShowInterval = setInterval(slideShowStep, 1000);
 }
 
 function handleOrientationChange() {
-    if (window.innerHeight < window.innerWidth) startSlideShow();
-    else stopSlideShow();
+    if (window.innerHeight < window.innerWidth && orientation != LANDSCAPE) {
+        startSlideShow();
+        orientation = LANDSCAPE;
+    }
+    else if (orientation != PORTRAIT) {
+        stopSlideShow();
+        orientation = PORTRAIT;
+    }
 }
 
 function preloadImages() {
@@ -63,7 +72,9 @@ function init() {
     preloadImages();
     setTimeout(function () {
         handleOrientationChange();
-        window.onresize = handleOrientationChange;
+        setInterval(function () {
+            handleOrientationChange();
+        }, 10);
     }, 1000);
 
     document.body.classList.add("mobile");
