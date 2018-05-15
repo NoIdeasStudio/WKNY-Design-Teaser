@@ -65,3 +65,38 @@
     at Object.onceWrapper (events.js:272:13)
 [error] 
 [error] Error: An unexpected error has occurred.
+[debug] [2018-05-15T16:56:46.988Z] ----------------------------------------------------------------------
+[debug] [2018-05-15T16:56:46.989Z] Command:       /usr/local/Cellar/node/9.11.1/bin/node /usr/local/bin/firebase deploy
+[debug] [2018-05-15T16:56:46.989Z] CLI Version:   3.18.4
+[debug] [2018-05-15T16:56:46.989Z] Platform:      darwin
+[debug] [2018-05-15T16:56:46.989Z] Node Version:  v9.11.1
+[debug] [2018-05-15T16:56:46.990Z] Time:          Tue May 15 2018 12:56:46 GMT-0400 (EDT)
+[debug] [2018-05-15T16:56:46.990Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2018-05-15T16:56:47.000Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-05-15T16:56:47.000Z] > authorizing via signed-in user
+[debug] [2018-05-15T16:56:47.001Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2018-05-15T16:56:47.002Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ { refresh_token: '1/V6jNryOD5t5S8U3Pguxi4UVqJbSUvJ14zKchBOYut9w',
+  client_id: '563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com',
+  client_secret: 'j9iVZfS8kkCEFUPaAeJV0sAi',
+  grant_type: 'refresh_token',
+  scope: 'email https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/cloudplatformprojects.readonly https://www.googleapis.com/auth/firebase openid' } 
+ Tue May 15 2018 12:56:47 GMT-0400 (EDT)
+[debug] [2018-05-15T16:56:47.223Z] <<< HTTP RESPONSE 200
+[debug] [2018-05-15T16:56:47.239Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/wkny-2f816  
+  
+ Tue May 15 2018 12:56:47 GMT-0400 (EDT)
+[debug] [2018-05-15T16:56:47.532Z] <<< HTTP RESPONSE 200
+[debug] [2018-05-15T16:56:47.533Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/wkny-2f816/tokens  
+  
+ Tue May 15 2018 12:56:47 GMT-0400 (EDT)
+[debug] [2018-05-15T16:56:47.815Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Deploying to 'wkny-2f816'...
+[info] 
+[info] i  deploying hosting
+[info] i  hosting: preparing public directory for upload...
+[debug] [2018-05-15T16:56:59.170Z] >>> HTTP REQUEST PUT https://deploy.firebase.com/v1/hosting/wkny-2f816/uploads/-LCZiu3esE34sY8r-98h?fileCount=136&message=  
+  
+ Tue May 15 2018 12:56:59 GMT-0400 (EDT)
