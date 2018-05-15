@@ -11,8 +11,6 @@ const WORK_CHANGE_TIMING   = 1000; // 1000 == 1 second
 const BETTER_CHANGE_TIMING = 150;
 const WORSE_CHANGE_TIMING  = 150;
 
-const SKEW_AMT             = 90;
-
 /******************************************************************************/
 /************************** GLOBALS *******************************************/
 /******************************************************************************/
@@ -217,30 +215,21 @@ var numSpans;
 var worseEl
 var savedBB = false;
 
-function skewSpanEl(i) {
-    window.requestAnimationFrame(function () {
-        var spanEl = document.getElementById("animSpan_" + i);
-        // console.log(spanEl);
-        spanEl.classList.remove("slow");
-        spanEl.style.transform =
-            "skew(" + chance.integer({min: -SKEW_AMT,max: SKEW_AMT}) + "deg, " + chance.integer({min: -SKEW_AMT,max: SKEW_AMT}) + "deg)";
-        spanEl.style.webkitTransform =
-            "skew(" + chance.integer({min: -SKEW_AMT,max: SKEW_AMT}) + "deg, " + chance.integer({min: -SKEW_AMT,max: SKEW_AMT}) + "deg)";
-        if (chance.bool()) {
-            spanEl.style.color = "white";
-            spanEl.style.webkitTextStroke = "2px black";
-            spanEl.style.textStroke = chance.integer({min: 1, max: 2}) + "px black";
-        }
-    });
-}
-
 function startWorse() {
     document.getElementById("info").classList.add("fixWorse");
     if (savedBB) return;
     savedBB = worseEl.getBoundingClientRect();
 
-    for (var i = 0; i < numSpans; i++) skewSpanEl(i);
-
+    for (var i = 0; i < numSpans; i++) {
+        var spanEl = document.getElementById("animSpan_" + i);
+        spanEl.style.color = chance.color();
+        spanEl.style.transform =
+            "translate(" + chance.integer({min: -90,max: 90}) + "px, " + chance.integer({min: -90,max: 90}) + "px) " +
+            "rotate3d(" + chance.integer({min: 0,max: 1}) + "," + chance.integer({min: 0,max: 1}) + "," + chance.integer({min: 0,max: 1}) + "," + chance.integer({min: 0,max: 90}) + "deg)";
+        spanEl.style.webkitTransform =
+            "translate(" + chance.integer({min: -90,max: 90}) + "px, " + chance.integer({min: -90,max: 90}) + "px) " +
+            "rotate3d(" + chance.integer({min: 0,max: 1}) + "," + chance.integer({min: 0,max: 1}) + "," + chance.integer({min: 0,max: 1}) + "," + chance.integer({min: 0,max: 90}) + "deg)";
+    }
     setTimeout(function () {
         document.body.addEventListener("mousemove",stopWorse);
     }, 500);
@@ -253,8 +242,9 @@ function stopWorse(ev) {
         if (out) {
             for (var i = 0; i < numSpans; i++) {
                 var spanEl = document.getElementById("animSpan_" + i);
-                spanEl.classList.add("slow");
-                spanEl.style = null;
+                spanEl.style.color = null;
+                spanEl.style.transform = null;
+                spanEl.style.webkitTransform = null;
                 document.getElementById("info").classList.remove("fixWorse");
                 document.body.removeEventListener("mousemove",stopWorse);
             }
