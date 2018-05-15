@@ -9,7 +9,9 @@ const IMG_OVERLAY_HANG_AMT = 0;
 
 const WORK_CHANGE_TIMING   = 1000; // 1000 == 1 second
 const BETTER_CHANGE_TIMING = 150;
-const WORSE_CHANGE_TIMING  = 150;
+const WORSE_CHANGE_TIMING  = 300;
+
+const SKEW_AMT             = 150;
 
 /******************************************************************************/
 /************************** GLOBALS *******************************************/
@@ -28,6 +30,18 @@ function shuffle(a) {
         [a[i], a[j]] = [a[j], a[i]];
     }
     return a;
+}
+
+function stringToElement(htmlString) {
+  var div = document.createElement('div');
+  div.innerHTML = htmlString.trim();
+  return div.firstChild;
+}
+
+function elementToString(element) {
+  var div = document.createElement('div');
+  div.appendChild(element);
+  return div.innerHTML;
 }
 
 /******************************************************************************/
@@ -101,7 +115,7 @@ function startShowWork() {
 }
 
 function initWork() {
-    var workEl = document.getElementById("work");
+    var workEl = document.getElementsByClassName("work")[0];
     workEl.addEventListener("mouseenter",startShowWork);
     workEl.addEventListener("mouseleave",stopShowWork);
 }
@@ -171,7 +185,6 @@ function betterStep() {
 
 function betterStopStep(i) {
     setTimeout(function () {
-        console.log(i);
         var curRem = document.getElementById("better_" + i);
         if (curRem) curRem.parentNode.removeChild(curRem);
     }, Math.floor(700 / betterNumShown) * (betterNumShown - 1 - i));
@@ -191,7 +204,7 @@ function startBetter() {
 }
 
 function initBetter() {
-    var betterEl = document.getElementById("better");
+    var betterEl = document.getElementsByClassName("better")[0];
     betterEl.addEventListener("mouseenter",startBetter);
     betterEl.addEventListener("mouseleave",stopBetter);
 }
@@ -200,9 +213,34 @@ function initBetter() {
 /************************** WORSE *********************************************/
 /******************************************************************************/
 
-var worseInterval;
+var numSpans;
+var worseEl
+var savedBB = false;
+var allowWorseStop = false;
+var worseMouseOut = false;
 
-function worseStep() {
+var worseImagesInterval;
+
+function skewSpanEl(i) {
+    window.requestAnimationFrame(function () {
+        var spanEl = document.getElementById("animSpan_" + i);
+        // console.log(spanEl);
+        spanEl.classList.remove("slow");
+        spanEl.style.transform =
+            "translate(" + chance.integer({min: -SKEW_AMT,max: SKEW_AMT}) + "px, " + chance.integer({min: -SKEW_AMT,max: SKEW_AMT}) + "px) " +
+            "rotate3d(" + chance.integer({min: 0,max: 1}) + "," + chance.integer({min: 0,max: 1}) + "," + chance.integer({min: 0,max: 1}) + "," + chance.integer({min: 0,max: 90}) + "deg)";
+        spanEl.style.webkitTransform =
+            "translate(" + chance.integer({min: -SKEW_AMT,max: SKEW_AMT}) + "px, " + chance.integer({min: -SKEW_AMT,max: SKEW_AMT}) + "px) " +
+            "rotate3d(" + chance.integer({min: 0,max: 1}) + "," + chance.integer({min: 0,max: 1}) + "," + chance.integer({min: 0,max: 1}) + "," + chance.integer({min: 0,max: 90}) + "deg)";
+    });
+}
+
+function skewAllSpans() {
+    for (var i = 0; i < numSpans; i++) skewSpanEl(i);
+}
+
+function worseImagesStep() {
+    skewAllSpans();
     var curImgInd = chance.integer({min:0,max:worseImages.length-1});
     // make sure the same image isn't selected twice in a row
     while (typeof lastImgInd == "number" && lastImgInd == curImgInd)
@@ -235,20 +273,83 @@ function worseStep() {
 }
 
 function startWorse() {
-    if (worseInterval) clearInterval(worseInterval);
-    worseStep();
-    worseInterval = setInterval(worseStep, WORSE_CHANGE_TIMING);
+    if (savedBB) return;
+    document.getElementById("info").classList.add("fixWorse");
+    savedBB = worseEl.getBoundingClientRect();
+
+    document.getElementById("info").classList.add("fixWorse");
+
+    if (!worseImagesInterval) {
+        worseImagesStep();
+        worseImagesInterval = setInterval(worseImagesStep, WORSE_CHANGE_TIMING);
+    }
+
+    skewAllSpans();
+    worseMouseOut = false;
+    allowWorseStop = false;
+
+    if (!allowWorseStop) setTimeout(function () {
+        allowWorseStop = true;
+    }, 100);
 }
 
-function stopWorse() {
-    clearInterval(worseInterval);
-    overlayImgEl.classList.add("hidden");
+function stopWorse(ev) {
+    if (savedBB) {
+        console.log("check");
+        worseMouseOut = (ev.clientX < savedBB.left) || (ev.clientX > savedBB.left + savedBB.width) ||
+                  (ev.clientY < savedBB.top) || (ev.clientY > savedBB.top + savedBB.height);
+        if (worseMouseOut && allowWorseStop) {
+            document.getElementById("info").classList.remove("fixWorse");
+            clearInterval(worseImagesInterval);
+            worseImagesInterval = false;
+            overlayImgEl.classList.add("hidden");
+            for (var i = 0; i < numSpans; i++) {
+                var spanEl = document.getElementById("animSpan_" + i);
+                spanEl.classList.add("slow");
+                spanEl.style = null;
+            }
+            setTimeout(function () {savedBB = false}, 10);
+        }
+    }
 }
 
 function initWorse() {
-    var worseEl = document.getElementById("worse");
+    textNodes = [...document.getElementById("infoText").childNodes];
+
+    numSpans = 0;
+
+    var replaceText = "";
+
+    for (var i = 0; i < textNodes.length; i++) {
+        if (!textNodes[i].tagName) {
+            var text = textNodes[i].textContent.trim();
+            var newText = "";
+            var tokens = text.split(/\s+/);
+            for (var j = 0; j < tokens.length; j++) {
+                var newSpan = document.createElement("span");
+                newSpan.id = "animSpan_" + numSpans;
+                newSpan.classList.add("animSpan");
+                newSpan.innerHTML = tokens[j] + " ";
+                newText += elementToString(newSpan);
+                numSpans++;
+            }
+            replaceText += newText;
+        }
+        else if (textNodes[i].tagName == "SPAN") {
+            // uncomment to also change the words with borders
+            // textNodes[i].id = "animSpan_" + numSpans;
+            // textNodes[i].classList.add("animSpan");
+            // numSpans++;
+            replaceText += elementToString(textNodes[i]) + " ";
+        }
+        else replaceText += elementToString(textNodes[i]) + " ";
+    }
+
+    document.getElementById("infoText").innerHTML = replaceText;
+
+    worseEl = document.getElementsByClassName("worse")[0];
     worseEl.addEventListener("mouseenter",startWorse);
-    worseEl.addEventListener("mouseleave",stopWorse);
+    document.body.addEventListener("mousemove",stopWorse);
 }
 
 /******************************************************************************/
@@ -280,9 +381,9 @@ function init() {
     document.body.classList.add("notMobile");
     preloadImages();
     overlayImgEl = document.getElementById("overlayImg");
+    initWorse();
     initWork();
     initBetter();
-    initWorse();
 }
 
 init();

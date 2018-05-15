@@ -4,16 +4,24 @@ function isMobile() {
     return check;
 };
 
+function fixInfoHeight() {
+    var infoCont = document.getElementById("info");
+    infoCont.style.maxHeight = (window.innerHeight - document.getElementsByTagName("footer")[0].clientHeight) + "px";
+    infoCont.style.minHeight = (window.innerHeight - document.getElementsByTagName("footer")[0].clientHeight) + "px";
+}
+
 function chooseJS() {
     var head = document.getElementsByTagName('head')[0];
     var js = document.createElement("script");
 
     js.type = "text/javascript";
-    console.log(isMobile());
     if (isMobile()) js.src = "js/mobile.js";
     else js.src = "js/main.js";
 
     head.appendChild(js);
+
+    fixInfoHeight();
 }
 
 window.onload = chooseJS;
+window.onresize = fixInfoHeight

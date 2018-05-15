@@ -1,9 +1,14 @@
 const NUM_WORK_IMAGES = 26;
+const LANDSCAPE       = "L";
+const PORTRAIT        = "P";
+const SS_TIMING       = 500;
 
 var workImages = [];
 
 var slideShowInterval;
 var ssQueue;
+
+var orientation = false;
 
 function shuffle(a) {
     for (let i = a.length - 1; i > 0; i--) {
@@ -18,35 +23,38 @@ function slideShowStep() {
     if (ssQueue.length == 0)
         ssQueue = shuffle([...Array(NUM_WORK_IMAGES).keys()]);
 
-    console.log(curImg);
+    if (!curImg) return;
 
     var ssEl = document.getElementById("slideShow");
     ssEl.style.backgroundImage = "url(" + curImg.src + ")";
-
-    slideShow.classList.remove("hidden");
+    ssEl.classList.remove("hidden");
     document.body.classList.add("ss");
 }
 
 function stopSlideShow() {
+    var ssEl = document.getElementById("slideShow");
+    ssEl.classList.add("hidden");
     if (slideShowInterval) clearInterval(slideShowInterval);
-    slideShow.classList.add("hidden");
+    slideShowInterval = false;
     document.body.classList.remove("ss");
 }
 
 function startSlideShow() {
     if (slideShowInterval) clearInterval(slideShowInterval);
     ssQueue = shuffle([...Array(NUM_WORK_IMAGES).keys()]);
-    console.log(ssQueue);
     slideShowStep();
-    slideShowInterval = setInterval(slideShowStep, 1000);
+    slideShowInterval = setInterval(slideShowStep, SS_TIMING);
 }
 
 function handleOrientationChange() {
-    if (screen.orientation.angle == 90 || screen.orientation.angle == 270) {
+    if (window.innerHeight < window.innerWidth && orientation != LANDSCAPE) {
+        if (document.body.classList.contains("ss")) return;
         startSlideShow();
+        orientation = LANDSCAPE;
     }
-    else {
+    else if (window.innerHeight >= window.innerWidth && orientation != PORTRAIT) {
         stopSlideShow();
+        orientation = PORTRAIT;
     }
 }
 
@@ -65,8 +73,13 @@ function preloadImages() {
 function init() {
     preloadImages();
     setTimeout(function () {
-        window.addEventListener("orientationchange", handleOrientationChange);
+        handleOrientationChange();
+        setInterval(function () {
+            handleOrientationChange();
+        }, 10);
     }, 1000);
+
+    document.body.classList.add("mobile");
 }
 
 init();
