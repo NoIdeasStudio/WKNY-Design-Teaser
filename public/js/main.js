@@ -2,14 +2,14 @@
 /************************** CONSTANTS *****************************************/
 /******************************************************************************/
 
-const NUM_WORK_IMAGES      = 26;
+const NUM_WORK_IMAGES      = 20;
 const NUM_WORSE_IMAGES     = 11;
 
 const IMG_OVERLAY_HANG_AMT = 0;
 
 const WORK_CHANGE_TIMING   = 1000; // 1000 == 1 second
 const BETTER_CHANGE_TIMING = 150;
-const WORSE_CHANGE_TIMING  = 300;
+const WORSE_CHANGE_TIMING  = 150;
 
 const SKEW_AMT             = 150;
 
@@ -295,7 +295,6 @@ function startWorse() {
 
 function stopWorse(ev) {
     if (savedBB) {
-        console.log("check");
         worseMouseOut = (ev.clientX < savedBB.left) || (ev.clientX > savedBB.left + savedBB.width) ||
                   (ev.clientY < savedBB.top) || (ev.clientY > savedBB.top + savedBB.height);
         if (worseMouseOut && allowWorseStop) {
@@ -308,7 +307,7 @@ function stopWorse(ev) {
                 spanEl.classList.add("slow");
                 spanEl.style = null;
             }
-            setTimeout(function () {savedBB = false}, 10);
+            setTimeout(function () {savedBB = false}, 50);
         }
     }
 }
@@ -335,13 +334,6 @@ function initWorse() {
             }
             replaceText += newText;
         }
-        else if (textNodes[i].tagName == "SPAN") {
-            // uncomment to also change the words with borders
-            // textNodes[i].id = "animSpan_" + numSpans;
-            // textNodes[i].classList.add("animSpan");
-            // numSpans++;
-            replaceText += elementToString(textNodes[i]) + " ";
-        }
         else replaceText += elementToString(textNodes[i]) + " ";
     }
 
@@ -361,11 +353,11 @@ var worseImages = [];
 
 function preloadImages() {
     // load work images
-    var baseWorkSrc = "img/work/cooper_hewitt/";
+    var baseWorkSrc = "img/work/";
     for (var i = 0; i < NUM_WORK_IMAGES; i++) {
         var img = new Image();
         img.onload = function () {workImages.push(this)}
-        img.src = baseWorkSrc + i + ".jpg";
+        img.src = baseWorkSrc + i + ".png";
     }
 
     // load worse images

@@ -60,13 +60,13 @@ function handleOrientationChange() {
 
 function preloadImages() {
     // load work images
-    var baseWorkSrc = "img/work/cooper_hewitt/";
+    var baseWorkSrc = "img/work/";
     for (var i = 0; i < NUM_WORK_IMAGES; i++) {
         var img = new Image();
         img.onload = function () {
             workImages.push(this);
         }
-        img.src = baseWorkSrc + i + ".jpg";
+        img.src = baseWorkSrc + i + ".png";
     }
 }
 
