@@ -23,12 +23,14 @@ function slideShowStep() {
     var ssEl = document.getElementById("slideShow");
     ssEl.style.backgroundImage = "url(" + curImg.src + ")";
     ssEl.classList.remove("hidden");
+    document.body.classList.add("ss");
 }
 
 function stopSlideShow() {
     var ssEl = document.getElementById("slideShow");
     ssEl.classList.add("hidden");
     if (slideShowInterval) clearInterval(slideShowInterval);
+    document.body.classList.remove("ss");
 }
 
 function startSlideShow() {

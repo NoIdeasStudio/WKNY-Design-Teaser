@@ -76,6 +76,10 @@ p {
     overflow-y: hidden;
 }
 
+.ss .info {
+    display: none;
+}
+
 .info h1 {
     max-height: 100%;
     overflow: visible;
