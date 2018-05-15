@@ -295,6 +295,7 @@ footer {
     pointer-events: none;
     z-index: 100;
     height: 100px;
+    border: 1px solid black;
 }
 
 .overlayImg.hidden {
@@ -321,10 +322,10 @@ footer {
     -moz-transition: -webkit-transform 0.3s, transform 0.3s, font-size 0.3s;
     -o-transition: -webkit-transform 0.3s, transform 0.3s, font-size 0.3s;
 
-    /* transition-timing-function: linear;
+    transition-timing-function: linear;
     -webkit-transition-timing-function: linear;
     -moz-transition-timing-function: linear;
-    -o-transition-timing-function: linear; */
+    -o-transition-timing-function: linear;
 
     display: inline-block;
     white-space: pre;

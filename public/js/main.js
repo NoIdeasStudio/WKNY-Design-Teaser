@@ -11,7 +11,7 @@ const WORK_CHANGE_TIMING   = 1000; // 1000 == 1 second
 const BETTER_CHANGE_TIMING = 150;
 const WORSE_CHANGE_TIMING  = 300;
 
-const SKEW_AMT             = 90;
+const SKEW_AMT             = 150;
 
 /******************************************************************************/
 /************************** GLOBALS *******************************************/
@@ -227,14 +227,11 @@ function skewSpanEl(i) {
         // console.log(spanEl);
         spanEl.classList.remove("slow");
         spanEl.style.transform =
-            "skew(" + chance.integer({min: -SKEW_AMT,max: SKEW_AMT}) + "deg, " + chance.integer({min: -SKEW_AMT,max: SKEW_AMT}) + "deg)";
+            "translate(" + chance.integer({min: -SKEW_AMT,max: SKEW_AMT}) + "px, " + chance.integer({min: -SKEW_AMT,max: SKEW_AMT}) + "px) " +
+            "rotate3d(" + chance.integer({min: 0,max: 1}) + "," + chance.integer({min: 0,max: 1}) + "," + chance.integer({min: 0,max: 1}) + "," + chance.integer({min: 0,max: 90}) + "deg)";
         spanEl.style.webkitTransform =
-            "skew(" + chance.integer({min: -SKEW_AMT,max: SKEW_AMT}) + "deg, " + chance.integer({min: -SKEW_AMT,max: SKEW_AMT}) + "deg)";
-        if (chance.bool()) {
-            spanEl.style.color = "white";
-            spanEl.style.webkitTextStroke = "2px black";
-            spanEl.style.textStroke = chance.integer({min: 1, max: 2}) + "px black";
-        }
+            "translate(" + chance.integer({min: -SKEW_AMT,max: SKEW_AMT}) + "px, " + chance.integer({min: -SKEW_AMT,max: SKEW_AMT}) + "px) " +
+            "rotate3d(" + chance.integer({min: 0,max: 1}) + "," + chance.integer({min: 0,max: 1}) + "," + chance.integer({min: 0,max: 1}) + "," + chance.integer({min: 0,max: 90}) + "deg)";
     });
 }
 
@@ -243,6 +240,7 @@ function skewAllSpans() {
 }
 
 function worseImagesStep() {
+    skewAllSpans();
     var curImgInd = chance.integer({min:0,max:worseImages.length-1});
     // make sure the same image isn't selected twice in a row
     while (typeof lastImgInd == "number" && lastImgInd == curImgInd)
@@ -272,7 +270,6 @@ function worseImagesStep() {
     overlayImgEl.src          = curImg.src;
 
     overlayImgEl.classList.remove("hidden");
-    // skewAllSpans();
 }
 
 function startWorse() {
@@ -282,10 +279,10 @@ function startWorse() {
 
     document.getElementById("info").classList.add("fixWorse");
 
-    // if (!worseImagesInterval) {
-    //     worseImagesStep();
-    //     worseImagesInterval = setInterval(worseImagesStep, WORSE_CHANGE_TIMING);
-    // }
+    if (!worseImagesInterval) {
+        worseImagesStep();
+        worseImagesInterval = setInterval(worseImagesStep, WORSE_CHANGE_TIMING);
+    }
 
     skewAllSpans();
     worseMouseOut = false;
@@ -298,19 +295,20 @@ function startWorse() {
 
 function stopWorse(ev) {
     if (savedBB) {
+        console.log("check");
         worseMouseOut = (ev.clientX < savedBB.left) || (ev.clientX > savedBB.left + savedBB.width) ||
                   (ev.clientY < savedBB.top) || (ev.clientY > savedBB.top + savedBB.height);
         if (worseMouseOut && allowWorseStop) {
+            document.getElementById("info").classList.remove("fixWorse");
+            clearInterval(worseImagesInterval);
+            worseImagesInterval = false;
+            overlayImgEl.classList.add("hidden");
             for (var i = 0; i < numSpans; i++) {
                 var spanEl = document.getElementById("animSpan_" + i);
                 spanEl.classList.add("slow");
                 spanEl.style = null;
-                document.getElementById("info").classList.remove("fixWorse");
-                clearInterval(worseImagesInterval);
-                worseImagesInterval = false;
-                overlayImgEl.classList.add("hidden");
             }
-            savedBB = false;
+            setTimeout(function () {savedBB = false}, 10);
         }
     }
 }

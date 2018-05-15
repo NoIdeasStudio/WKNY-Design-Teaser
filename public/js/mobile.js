@@ -1,6 +1,7 @@
 const NUM_WORK_IMAGES = 26;
 const LANDSCAPE       = "L";
 const PORTRAIT        = "P";
+const SS_TIMING       = 500;
 
 var workImages = [];
 
@@ -42,7 +43,7 @@ function startSlideShow() {
     if (slideShowInterval) clearInterval(slideShowInterval);
     ssQueue = shuffle([...Array(NUM_WORK_IMAGES).keys()]);
     slideShowStep();
-    slideShowInterval = setInterval(slideShowStep, 1000);
+    slideShowInterval = setInterval(slideShowStep, SS_TIMING);
 }
 
 function handleOrientationChange() {
