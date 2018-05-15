@@ -18,7 +18,7 @@ function slideShowStep() {
     if (ssQueue.length == 0)
         ssQueue = shuffle([...Array(NUM_WORK_IMAGES).keys()]);
 
-    console.log(curImg);
+    if (!curImg) return;
 
     var ssEl = document.getElementById("slideShow");
     ssEl.style.backgroundImage = "url(" + curImg.src + ")";
@@ -30,12 +30,12 @@ function stopSlideShow() {
     var ssEl = document.getElementById("slideShow");
     ssEl.classList.add("hidden");
     if (slideShowInterval) clearInterval(slideShowInterval);
+    slideShowInterval = false;
     document.body.classList.remove("ss");
 }
 
 function startSlideShow() {
-
-    if (slideShowInterval) clearInterval(slideShowInterval);
+    if (slideShowInterval) return;
     ssQueue = shuffle([...Array(NUM_WORK_IMAGES).keys()]);
     console.log(ssQueue);
     slideShowStep();
