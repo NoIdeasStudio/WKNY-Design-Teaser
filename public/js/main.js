@@ -240,7 +240,6 @@ function skewAllSpans() {
 }
 
 function worseImagesStep() {
-    skewAllSpans();
     var curImgInd = chance.integer({min:0,max:worseImages.length-1});
     // make sure the same image isn't selected twice in a row
     while (typeof lastImgInd == "number" && lastImgInd == curImgInd)

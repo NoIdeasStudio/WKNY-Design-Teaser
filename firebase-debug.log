@@ -1,26 +1,23 @@
-[debug] [2018-05-15T20:38:16.703Z] ----------------------------------------------------------------------
-[debug] [2018-05-15T20:38:16.704Z] Command:       /usr/local/Cellar/node/9.11.1/bin/node /usr/local/bin/firebase deploy
-[debug] [2018-05-15T20:38:16.705Z] CLI Version:   3.18.4
-[debug] [2018-05-15T20:38:16.705Z] Platform:      darwin
-[debug] [2018-05-15T20:38:16.705Z] Node Version:  v9.11.1
-[debug] [2018-05-15T20:38:16.705Z] Time:          Tue May 15 2018 16:38:16 GMT-0400 (EDT)
-[debug] [2018-05-15T20:38:16.705Z] ----------------------------------------------------------------------
+[debug] [2018-05-15T20:41:29.836Z] ----------------------------------------------------------------------
+[debug] [2018-05-15T20:41:29.838Z] Command:       /usr/local/Cellar/node/9.11.1/bin/node /usr/local/bin/firebase deploy
+[debug] [2018-05-15T20:41:29.838Z] CLI Version:   3.18.4
+[debug] [2018-05-15T20:41:29.838Z] Platform:      darwin
+[debug] [2018-05-15T20:41:29.838Z] Node Version:  v9.11.1
+[debug] [2018-05-15T20:41:29.839Z] Time:          Tue May 15 2018 16:41:29 GMT-0400 (EDT)
+[debug] [2018-05-15T20:41:29.839Z] ----------------------------------------------------------------------
 [debug] 
-[debug] [2018-05-15T20:38:16.714Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
-[debug] [2018-05-15T20:38:16.714Z] > authorizing via signed-in user
-[debug] [2018-05-15T20:38:16.716Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/wkny-2f816  
+[debug] [2018-05-15T20:41:29.848Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-05-15T20:41:29.848Z] > authorizing via signed-in user
+[debug] [2018-05-15T20:41:29.849Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/wkny-2f816  
   
- Tue May 15 2018 16:38:16 GMT-0400 (EDT)
-[debug] [2018-05-15T20:38:17.056Z] <<< HTTP RESPONSE 200
-[debug] [2018-05-15T20:38:17.057Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/wkny-2f816/tokens  
+ Tue May 15 2018 16:41:29 GMT-0400 (EDT)
+[debug] [2018-05-15T20:41:30.425Z] <<< HTTP RESPONSE 200
+[debug] [2018-05-15T20:41:30.426Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/wkny-2f816/tokens  
   
- Tue May 15 2018 16:38:17 GMT-0400 (EDT)
-[debug] [2018-05-15T20:38:17.338Z] <<< HTTP RESPONSE 200
+ Tue May 15 2018 16:41:30 GMT-0400 (EDT)
+[debug] [2018-05-15T20:41:30.734Z] <<< HTTP RESPONSE 200
 [info] 
 [info] === Deploying to 'wkny-2f816'...
 [info] 
 [info] i  deploying hosting
 [info] i  hosting: preparing public directory for upload...
-[debug] [2018-05-15T20:38:18.401Z] >>> HTTP REQUEST PUT https://deploy.firebase.com/v1/hosting/wkny-2f816/uploads/-LC_WaY49izZgsG8isUj?fileCount=67&message=  
-  
- Tue May 15 2018 16:38:18 GMT-0400 (EDT)
