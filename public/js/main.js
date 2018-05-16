@@ -266,7 +266,7 @@ function worseImagesStep() {
 
     // set image dimentions
     overlayImgEl.style.height = imgHeight + "px";
-    overlayImgEl.style.width  = imgWidth + "px";
+    overlayImgEl.style.width  = imgWidth  + "px";
     overlayImgEl.src          = curImg.src;
 
     overlayImgEl.classList.remove("hidden");
