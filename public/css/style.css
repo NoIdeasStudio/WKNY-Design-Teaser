@@ -24,6 +24,10 @@
   color: #fff;
 }
 
+html {
+    cursor: url('../img/icon/cursor.png') 52 52, crosshair;
+}
+
 h1 {
     font-family: 'Riccione-Xlight', 'Times New Roman', times, serif;
     font-size: 6.5vw;
@@ -84,7 +88,6 @@ p {
 }
 
 .notMobile .border:hover {
-    cursor: crosshair;
     color: white;
     background-color: black;
 }
@@ -331,15 +334,15 @@ footer {
 }
 
 .animSpan {
-    transition: -webkit-transform 0.3s, transform 0.3s, font-size 0.3s;
-    -webkit-transition: -webkit-transform 0.3s, transform 0.3s, font-size 0.3s;
-    -moz-transition: -webkit-transform 0.3s, transform 0.3s, font-size 0.3s;
-    -o-transition: -webkit-transform 0.3s, transform 0.3s, font-size 0.3s;
+    /* transition: -webkit-transform 0.05s, transform 0.05s, font-size 0.3s;
+    -webkit-transition: -webkit-transform 0.05s, transform 0.05s, font-size 0.3s;
+    -moz-transition: -webkit-transform 0.05s, transform 0.05s, font-size 0.3s;
+    -o-transition: -webkit-transform 0.05s, transform 0.05s, font-size 0.3s;
 
     transition-timing-function: linear;
     -webkit-transition-timing-function: linear;
     -moz-transition-timing-function: linear;
-    -o-transition-timing-function: linear;
+    -o-transition-timing-function: linear; */
 
     display: inline-block;
     white-space: pre;
@@ -349,8 +352,8 @@ footer {
 }
 
 .animSpan.slow {
-    transition: -webkit-transform 1s, transform 1s;
-    -webkit-transition: -webkit-transform 1s, transform 1s;
-    -moz-transition: -webkit-transform 1s, transform 1s;
-    -o-transition: -webkit-transform 1s, transform 1s;
+    transition: -webkit-transform 0.3s, transform 0.3s;
+    -webkit-transition: -webkit-transform 0.3s, transform 0.3s;
+    -moz-transition: -webkit-transform 0.3s, transform 0.3s;
+    -o-transition: -webkit-transform 0.3s, transform 0.3s;
 }

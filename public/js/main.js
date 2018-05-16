@@ -221,9 +221,9 @@ var worseMouseOut = false;
 
 var worseImagesInterval;
 
-function skewSpanEl(i) {
+function skewSpanEl(ind) {
     window.requestAnimationFrame(function () {
-        var spanEl = document.getElementById("animSpan_" + i);
+        var spanEl = document.getElementById("animSpan_" + ind);
         // console.log(spanEl);
         spanEl.classList.remove("slow");
         spanEl.style.transform =
@@ -240,6 +240,7 @@ function skewAllSpans() {
 }
 
 function worseImagesStep() {
+    skewAllSpans();
     var curImgInd = chance.integer({min:0,max:worseImages.length-1});
     // make sure the same image isn't selected twice in a row
     while (typeof lastImgInd == "number" && lastImgInd == curImgInd)
