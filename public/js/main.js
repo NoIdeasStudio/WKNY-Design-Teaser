@@ -224,8 +224,6 @@ var worseImagesInterval;
 function skewSpanEl(ind) {
     window.requestAnimationFrame(function () {
         var spanEl = document.getElementById("animSpan_" + ind);
-        // console.log(spanEl);
-        spanEl.classList.remove("slow");
         spanEl.style.transform =
             "translate(" + chance.integer({min: -SKEW_AMT,max: SKEW_AMT}) + "px, " + chance.integer({min: -SKEW_AMT,max: SKEW_AMT}) + "px) " +
             "rotate3d(" + chance.integer({min: 0,max: 1}) + "," + chance.integer({min: 0,max: 1}) + "," + chance.integer({min: 0,max: 1}) + "," + chance.integer({min: 0,max: 90}) + "deg)";
@@ -240,7 +238,6 @@ function skewAllSpans() {
 }
 
 function worseImagesStep() {
-    skewAllSpans();
     var curImgInd = chance.integer({min:0,max:worseImages.length-1});
     // make sure the same image isn't selected twice in a row
     while (typeof lastImgInd == "number" && lastImgInd == curImgInd)
@@ -304,7 +301,6 @@ function stopWorse(ev) {
             overlayImgEl.classList.add("hidden");
             for (var i = 0; i < numSpans; i++) {
                 var spanEl = document.getElementById("animSpan_" + i);
-                spanEl.classList.add("slow");
                 spanEl.style = null;
             }
             setTimeout(function () {savedBB = false}, 50);
