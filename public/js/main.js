@@ -302,15 +302,16 @@ class Circle {
 
         this.xr = 6 + 10 * Math.random();
         this.yr = 2 + 10 * Math.random();
-        this.r  = 6 + 10 * Math.random()
+        this.r  = 6 + 10 * Math.random();
 
         this.color = colorPallete[Math.floor(Math.random() * colorPallete.length)];
     }
 
     update() {
-        var ctrl = 90;
+        var ctrl = 100;
         this.x += this.vx * (Math.max(ctrl,Math.abs(wetSrc.x - this.x))/ctrl);
         this.y += this.vy * (Math.max(ctrl,Math.abs(wetSrc.y - this.y))/ctrl);
+
         this.r  -= .01;
     }
 }
