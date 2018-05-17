@@ -24,10 +24,6 @@
   color: #fff;
 }
 
-html {
-    cursor: url('../img/icon/cursor.png') 52 52, crosshair;
-}
-
 h1 {
     font-family: 'Riccione-Xlight', 'Times New Roman', times, serif;
     font-size: 6.5vw;
@@ -85,6 +81,7 @@ p {
     z-index: 100;
     background-color: white;
     white-space: nowrap;
+    cursor: pointer;
 }
 
 .notMobile .border:hover {
