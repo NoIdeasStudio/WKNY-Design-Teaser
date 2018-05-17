@@ -184,10 +184,8 @@ function betterStep() {
 }
 
 function betterStopStep(i) {
-    setTimeout(function () {
-        var curRem = document.getElementById("better_" + i);
-        if (curRem) curRem.parentNode.removeChild(curRem);
-    }, Math.floor(700 / betterNumShown) * (betterNumShown - 1 - i));
+    var curRem = document.getElementById("better_" + i);
+    if (curRem) curRem.parentNode.removeChild(curRem);
 }
 
 function stopBetter() {
