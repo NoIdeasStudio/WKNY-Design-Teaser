@@ -36,6 +36,15 @@
 
 </head>
 <body>
+    <canvas class="hidden" id="canvas"></canvas>
+    <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+      <defs>
+        <filter id="liquid">
+          <fegaussianblur in="SourceGraphic" stddeviation="10" result="blur" />
+          <fecolormatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 40 -10"/>
+        </filter>
+      </defs>
+    </svg>
     <div id="slideShow" class="slideShow hidden"></div>
     <img class="overlayImg hidden" id="overlayImg" alt="overlay">
     <div class="info" id="info">
@@ -44,7 +53,7 @@
 
             The aforementioned Design Department is interested in:
             love, friendship, sans-serif mono weight typography
-            and “wet” (in terms of the light on photographic subjects)
+            and <span class="border wet">“wet”</span> (in terms of the light on photographic subjects)
             imagery, not necessarily in that order. They are also
             interested in making something quite nice for you, or,
             as an alternative, anyone you might know.<br ><br >

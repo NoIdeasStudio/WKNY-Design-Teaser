@@ -342,3 +342,21 @@ footer {
     -moz-transition: -webkit-transform 0.3s, transform 0.3s;
     -o-transition: -webkit-transform 0.3s, transform 0.3s;
 }
+
+canvas {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    filter: url("#liquid");
+}
+
+canvas.hidden {
+    display: none;
+}
+
+svg {
+    max-height: 0;
+    position: fixed;
+    opacity: 0;
+    pointer-events: none;
+}

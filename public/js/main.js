@@ -263,8 +263,111 @@ function stopWorse(ev) {
 function initWorse() {
     worseEl = document.getElementsByClassName("worse")[0];
     worseEl.addEventListener("mouseenter",startWorse);
-    document.body.addEventListener("mouseout",stopWorse);
+    worseEl.addEventListener("mouseout",stopWorse);
 }
+
+/******************************************************************************/
+/************************** WET ***********************************************/
+/******************************************************************************/
+
+const canvas       = document.getElementById("canvas");
+const context      = canvas.getContext("2d");
+const colorPallete = ["#010101", "#050505", "#101010", "#151515", "#202020", "#252525"];
+
+var width = canvas.width = window.innerWidth,
+    height = canvas.height = window.innerHeight,
+    wetSrc = {
+        x: width / 2,
+        y: height / 2
+    },
+    circles = [],
+    wetEnabled = false,
+    wetEl;
+
+window.onresize = function() {
+    width = canvas.width = window.innerWidth;
+    height = canvas.height = window.innerHeight;
+    wetSrc.x = width / 2;
+    wetSrc.y = height / 2;
+}
+
+class Circle {
+    constructor() {
+        this.x = wetSrc.x;
+        this.y = wetSrc.y;
+        this.angle = Math.PI * 2 * Math.random();
+        var speed = 1.5 + Math.random();
+        this.vx = speed * Math.cos(this.angle);
+        this.vy = speed * Math.sin(this.angle);
+
+        this.xr = 6 + 10 * Math.random();
+        this.yr = 2 + 10 * Math.random();
+        this.r  = 6 + 10 * Math.random()
+
+        this.color = colorPallete[Math.floor(Math.random() * colorPallete.length)];
+    }
+
+    update() {
+        var ctrl = 90;
+        this.x += this.vx * (Math.max(ctrl,Math.abs(wetSrc.x - this.x))/ctrl);
+        this.y += this.vy * (Math.max(ctrl,Math.abs(wetSrc.y - this.y))/ctrl);
+        this.r  -= .01;
+    }
+}
+
+function removeCircles() {
+    for (var i = 0; i < circles.length; i++) {
+        var b = circles[i];
+        if ( b.x + b.r < 0 || b.x - b.r > width || b.y + b.r < 0 ||  b.y - b.r > height || b.r < 0)
+            circles.splice(i, 1);
+    }
+}
+
+function renderCircles() {
+    context.clearRect(0, 0, width, height);
+
+    if (Math.random() > .2 && wetEnabled)
+        circles.push(new Circle());
+
+    for (var i = 0; i < circles.length; i++) {
+        var b = circles[i];
+        context.fillStyle = b.color;
+        context.beginPath();
+
+        context.arc(b.x, b.y, b.r, 0, Math.PI * 2, false);
+
+        context.fill();
+        b.update();
+    }
+
+    removeCircles();
+    requestAnimationFrame(renderCircles);
+}
+
+function startWet() {
+    document.getElementById("canvas").classList.remove("hidden");
+    wetEnabled = true;
+}
+
+function handleWetMouseMove(ev) {
+    wetSrc.x = ev.clientX;
+    wetSrc.y = ev.clientY;
+}
+
+function stopWet() {
+    wetEnabled = false;
+    // document.getElementById("canvas").classList.add("hidden");
+
+}
+
+function initWet() {
+    wetEl = document.getElementsByClassName("wet")[0];
+    wetEl.addEventListener("mouseenter",startWet);
+    wetEl.addEventListener("mousemove",handleWetMouseMove);
+    wetEl.addEventListener("mouseout",stopWet);
+}
+
+renderCircles();
 
 /******************************************************************************/
 /************************** INITIALIZATION ************************************/
@@ -298,6 +401,7 @@ function init() {
     initWorse();
     initWork();
     initBetter();
+    initWet();
 }
 
 init();
