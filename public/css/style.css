@@ -348,6 +348,9 @@ canvas {
     height: 100%;
     width: 100%;
     filter: url("#liquid");
+    -webkit-filter: url("#liquid");
+    -moz-filter: url("#liquid");
+    -o-filter: url("#liquid");
 }
 
 canvas.hidden {

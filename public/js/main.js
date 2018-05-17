@@ -272,17 +272,25 @@ function initWorse() {
 
 const canvas       = document.getElementById("canvas");
 const context      = canvas.getContext("2d");
+
+const tempCanvas   = document.createElement("canvas");
+const tempContext  = canvas.getContext("2d");
+
 const colorPallete = ["#010101", "#050505", "#101010", "#151515", "#202020", "#252525"];
 
-var width = canvas.width = window.innerWidth,
-    height = canvas.height = window.innerHeight,
+var width = canvas.width = tempCanvas.width = window.innerWidth,
+    height = canvas.height = tempCanvas.height = window.innerHeight,
     wetSrc = {
         x: width / 2,
         y: height / 2
     },
     circles = [],
     wetEnabled = false,
-    wetEl;
+    wetEl,
+    wetInterval;
+
+var buffer = [];
+var numBuffered = 0;
 
 window.onresize = function() {
     width = canvas.width = window.innerWidth;
@@ -300,19 +308,15 @@ class Circle {
         this.vx = speed * Math.cos(this.angle);
         this.vy = speed * Math.sin(this.angle);
 
-        this.xr = 6 + 10 * Math.random();
-        this.yr = 2 + 10 * Math.random();
-        this.r  = 6 + 10 * Math.random();
-
-        this.color = colorPallete[Math.floor(Math.random() * colorPallete.length)];
+        this.xr = 6 + 20 * Math.random();
+        this.yr = 6 + 20 * Math.random();
+        this.r  = 6 + 20 * Math.random();
     }
 
     update() {
-        var ctrl = 100;
-        this.x += this.vx * (Math.max(ctrl,Math.abs(wetSrc.x - this.x))/ctrl);
-        this.y += this.vy * (Math.max(ctrl,Math.abs(wetSrc.y - this.y))/ctrl);
-
-        this.r  -= .01;
+        this.x += this.vx;
+        this.y += this.vy;
+        this.r -= 0.1;
     }
 }
 
@@ -325,28 +329,45 @@ function removeCircles() {
 }
 
 function renderCircles() {
-    context.clearRect(0, 0, width, height);
+    if (buffer.length > 0) {
+        var toput = buffer.splice(0,1)[0];
+        context.clearRect(0, 0, width, height);
+        requestAnimationFrame(function () {
+            context.putImageData(toput,0,0);
+            console.log(toput.bnum);
+        });
+    }
+}
 
-    if (Math.random() > .2 && wetEnabled)
+function fillBuffer() {
+    if (buffer.length > 100) return;
+
+    if (chance.bool({liklihood:0.7}))
         circles.push(new Circle());
+
+    tempContext.clearRect(0, 0, width, height);
 
     for (var i = 0; i < circles.length; i++) {
         var b = circles[i];
-        context.fillStyle = b.color;
-        context.beginPath();
+        tempContext.beginPath();
 
-        context.arc(b.x, b.y, b.r, 0, Math.PI * 2, false);
+        tempContext.ellipse(b.x, b.y, b.xr, b.yr, b.angle, 0, 2 * Math.PI);
+        // tempContext.arc(b.x, b.y, b.r, 0, Math.PI * 2, false);
 
-        context.fill();
+        tempContext.fill();
         b.update();
     }
 
+    var bImgData = tempContext.getImageData(0,0,width,height);
+    bImgData.bnum = numBuffered;
+    numBuffered++;
+    buffer.push(bImgData);
+    // console.log(buffer.length);
+
     removeCircles();
-    requestAnimationFrame(renderCircles);
 }
 
 function startWet() {
-    document.getElementById("canvas").classList.remove("hidden");
     wetEnabled = true;
 }
 
@@ -357,18 +378,18 @@ function handleWetMouseMove(ev) {
 
 function stopWet() {
     wetEnabled = false;
-    // document.getElementById("canvas").classList.add("hidden");
-
 }
 
 function initWet() {
+    tempCanvas.style.display = "none";
+    document.getElementById("canvas").classList.remove("hidden");
     wetEl = document.getElementsByClassName("wet")[0];
     wetEl.addEventListener("mouseenter",startWet);
     wetEl.addEventListener("mousemove",handleWetMouseMove);
     wetEl.addEventListener("mouseout",stopWet);
+    setInterval(fillBuffer, 1);
+    wetInterval = setInterval(renderCircles, 100);
 }
-
-renderCircles();
 
 /******************************************************************************/
 /************************** INITIALIZATION ************************************/
@@ -402,7 +423,7 @@ function init() {
     initWorse();
     initWork();
     initBetter();
-    initWet();
+    // initWet();
 }
 
 init();
