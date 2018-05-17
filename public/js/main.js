@@ -240,7 +240,6 @@ function skewAllSpans() {
 }
 
 function worseImagesStep() {
-    skewAllSpans();
     var curImgInd = chance.integer({min:0,max:worseImages.length-1});
     // make sure the same image isn't selected twice in a row
     while (typeof lastImgInd == "number" && lastImgInd == curImgInd)
@@ -284,7 +283,6 @@ function startWorse() {
         worseImagesInterval = setInterval(worseImagesStep, WORSE_CHANGE_TIMING);
     }
 
-    skewAllSpans();
     worseMouseOut = false;
     allowWorseStop = false;
 
@@ -313,31 +311,31 @@ function stopWorse(ev) {
 }
 
 function initWorse() {
-    textNodes = [...document.getElementById("infoText").childNodes];
-
-    numSpans = 0;
-
-    var replaceText = "";
-
-    for (var i = 0; i < textNodes.length; i++) {
-        if (!textNodes[i].tagName) {
-            var text = textNodes[i].textContent.trim();
-            var newText = "";
-            var tokens = text.split(/\s+/);
-            for (var j = 0; j < tokens.length; j++) {
-                var newSpan = document.createElement("span");
-                newSpan.id = "animSpan_" + numSpans;
-                newSpan.classList.add("animSpan");
-                newSpan.innerHTML = tokens[j] + " ";
-                newText += elementToString(newSpan);
-                numSpans++;
-            }
-            replaceText += newText;
-        }
-        else replaceText += elementToString(textNodes[i]) + " ";
-    }
-
-    document.getElementById("infoText").innerHTML = replaceText;
+    // textNodes = [...document.getElementById("infoText").childNodes];
+    //
+    // numSpans = 0;
+    //
+    // var replaceText = "";
+    //
+    // for (var i = 0; i < textNodes.length; i++) {
+    //     if (!textNodes[i].tagName) {
+    //         var text = textNodes[i].textContent.trim();
+    //         var newText = "";
+    //         var tokens = text.split(/\s+/);
+    //         for (var j = 0; j < tokens.length; j++) {
+    //             var newSpan = document.createElement("span");
+    //             newSpan.id = "animSpan_" + numSpans;
+    //             newSpan.classList.add("animSpan");
+    //             newSpan.innerHTML = tokens[j] + " ";
+    //             newText += elementToString(newSpan);
+    //             numSpans++;
+    //         }
+    //         replaceText += newText;
+    //     }
+    //     else replaceText += elementToString(textNodes[i]) + " ";
+    // }
+    //
+    // document.getElementById("infoText").innerHTML = replaceText;
 
     worseEl = document.getElementsByClassName("worse")[0];
     worseEl.addEventListener("mouseenter",startWorse);
