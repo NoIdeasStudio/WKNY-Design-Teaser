@@ -1,14 +1,13 @@
 
 @font-face {
-    font-family:"Riccione-Xlight";
-    src:url("../fonts/ricciones-xl_TALK.woff2") format("woff2"),url("../fonts/ricciones-xl_TALK.woff") format("woff"),url("../fonts/ricciones-xl_TALK.otf") format("opentype");
+    font-family:"Self Modern";
+    src:url("/fonts/bretagne_self-modern_regular.woff2") format("woff2"),url("/fonts/bretagne_self-modern_regular.woff") format("woff"),url("/fonts/bretagne_self-modern_regular.otf") format("opentype");
     font-style:normal;font-weight:400;
 }
 
-
 @font-face {
     font-family:"Pitch-Regular";
-    src:url("..fonts/Pitch-Regular.woff2") format("woff2"),url("..fonts/Pitch-Regular.woff") format("woff"),url("..fonts/Pitch-Regular.otf") format("opentype");
+    src:url("/fonts/Pitch-Regular.woff2") format("woff2"),url("/fonts/Pitch-Regular.woff") format("woff"),url("/fonts/Pitch-Regular.otf") format("opentype");
     font-style:normal;font-weight:400;
 }
 
@@ -24,13 +23,9 @@
   color: #fff;
 }
 
-html {
-    cursor: url('../img/icon/cursor.png') 52 52, crosshair;
-}
-
 h1 {
-    font-family: 'Riccione-Xlight', 'Times New Roman', times, serif;
-    font-size: 6.5vw;
+    font-family: 'Self Modern', 'Times New Roman', times, serif;
+    font-size: 4.2vw;
     font-weight: normal;
     /* -webkit-font-smoothing: antialiased; */
     text-rendering: optimizeSpeed;
@@ -42,9 +37,19 @@ h1 {
             user-select: none;
 }
 
+h1 a {
+    color: #000;
+    text-decoration: none;
+    border-bottom: 1px solid #000;
+}
+
+h1 a:hover {
+    border-bottom: 1px solid transparent;
+}
+
 p {
     font-family: 'Pitch-Regular', "Courier New", Courier, monospace;
-    font-size: 1.4vw;
+    font-size: 1.2vw;
     font-weight: normal;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
@@ -60,10 +65,11 @@ p {
 
 .info {
     position: fixed;
-    padding: 3% 2.5%;
+    padding: 5% 5%;
     overflow: hidden;
     overflow-y: scroll;
     width: 100%;
+    background-color: #f4f4f4;
 }
 
 .info.fixWorse {
@@ -83,8 +89,15 @@ p {
     border: 1px solid #000;
     padding: 0% 1%;
     z-index: 100;
-    background-color: white;
+    background-color: #f4f4f4;
     white-space: nowrap;
+    cursor: pointer;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+     -khtml-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
 }
 
 .notMobile .border:hover {
@@ -106,7 +119,7 @@ footer {
     position: relative;
     border-top: 1px solid #000;
     padding: 1.5%;
-    background-color: #fff;
+    background-color: #f4f4f4;
 }
 
 #credit {
@@ -115,7 +128,7 @@ footer {
     bottom: 0;
     text-align: right;
     display: inline-block;
-    padding: 0 2% 2% 0;
+    padding: 0 2% 1.75% 0;
     white-space: nowrap;
 }
 
@@ -130,12 +143,13 @@ footer {
 
 .link img {
     display: inline-block;
-    width: 8%;
+    width: 7.5%;
     cursor: pointer;
     margin-right: 2.6%;
     vertical-align: middle;
 }
 
+#credit a,
 .link p,
 .link p a {
     display: inline-block;
@@ -143,6 +157,11 @@ footer {
     text-decoration: none;
 }
 
+#credit a {
+    border-bottom: 1px solid transparent;
+}
+
+#credit a:hover,
 .link p:hover {
     border-bottom: 1px solid #000;
 }
@@ -192,16 +211,13 @@ footer {
 }
 
 @media only screen and (max-width : 1200px) {
-    h1 {
-        font-size: 6.5vw;
-    }
 
     p {
-        font-size: 2vw;
+        font-size: 1.6vw;
     }
 
     .column {
-        width: 32%;
+        width: 30%;
     }
 
     .footer {
@@ -213,44 +229,23 @@ footer {
     }
 
     #credit {
-        padding-bottom: 2.7%;
+        padding-bottom: 2.6%;
     }
 }
 
-@media only screen and (max-width : 900px) {
-    h1 {
-        font-size: 6vw;
-    }
-
-    p {
-        font-size: 1.9vw;
-    }
-
-    .column {
-        width: 32%;
-    }
-
-    .footer {
-        padding: 2%;
-    }
-
-    .link img {
-        width: 9%;
-    }
-
-    #credit {
-        padding-bottom: 2.7%;
-    }
-}
-
-@media only screen and (max-width : 600px) {
+@media only screen and (max-width : 700px) {
 
     h1 {
-        font-size: 6.5vw;
+        font-size: 5.5vw;
     }
 
     .hide-mobile {
         display: none;
+    }
+
+    .border {
+        background-color: #000;
+        color: #fff;
     }
 
     .info {
@@ -259,11 +254,12 @@ footer {
     }
 
     .column {
-        width: 49%;
+        width: 100%;
+        margin-bottom: 2.2%;
     }
 
     p {
-        font-size: 2.8vw;
+        font-size: 3.8vw;
     }
 
     #row-one {
@@ -271,7 +267,7 @@ footer {
     }
 
     .link img {
-        width: 13%;
+        width: 7%;
     }
 
     .footer {
@@ -283,7 +279,6 @@ footer {
         text-align: left;
         width: 100%;
         padding: 0;
-        margin-top: 3.5%;
     }
 
 }
