@@ -279,29 +279,19 @@ function startWorse() {
 
     skewAllSpans();
     worseMouseOut = false;
-    allowWorseStop = false;
-
-    if (!allowWorseStop) setTimeout(function () {
-        allowWorseStop = true;
-    }, 100);
+    allowWorseStop = true;
 }
 
 function stopWorse(ev) {
-    if (savedBB) {
-        worseMouseOut = (ev.clientX < savedBB.left) || (ev.clientX > savedBB.left + savedBB.width) ||
-                  (ev.clientY < savedBB.top) || (ev.clientY > savedBB.top + savedBB.height);
-        if (worseMouseOut && allowWorseStop) {
-            document.getElementById("info").classList.remove("fixWorse");
-            clearInterval(worseImagesInterval);
-            worseImagesInterval = false;
-            overlayImgEl.classList.add("hidden");
-            for (var i = 0; i < numSpans; i++) {
-                var spanEl = document.getElementById("animSpan_" + i);
-                spanEl.style = null;
-            }
-            setTimeout(function () {savedBB = false}, 50);
-        }
+    document.getElementById("info").classList.remove("fixWorse");
+    clearInterval(worseImagesInterval);
+    worseImagesInterval = false;
+    overlayImgEl.classList.add("hidden");
+    for (var i = 0; i < numSpans; i++) {
+        var spanEl = document.getElementById("animSpan_" + i);
+        spanEl.style = null;
     }
+    setTimeout(function () {savedBB = false}, 50);
 }
 
 function initWorse() {
@@ -332,8 +322,8 @@ function initWorse() {
     document.getElementById("infoText").innerHTML = replaceText;
 
     worseEl = document.getElementsByClassName("worse")[0];
-    worseEl.addEventListener("mouseenter",startWorse);
-    document.body.addEventListener("mousemove",stopWorse);
+    worseEl.addEventListener("touchstart",startWorse);
+    worseEl.addEventListener("touchend",stopWorse);
 }
 
 /******************************************************************************/

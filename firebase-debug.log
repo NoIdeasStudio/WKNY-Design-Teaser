@@ -1,0 +1,26 @@
+[debug] [2018-05-18T23:49:00.735Z] ----------------------------------------------------------------------
+[debug] [2018-05-18T23:49:00.738Z] Command:       /usr/local/Cellar/node/9.11.1/bin/node /usr/local/bin/firebase deploy
+[debug] [2018-05-18T23:49:00.738Z] CLI Version:   3.18.4
+[debug] [2018-05-18T23:49:00.738Z] Platform:      darwin
+[debug] [2018-05-18T23:49:00.738Z] Node Version:  v9.11.1
+[debug] [2018-05-18T23:49:00.738Z] Time:          Fri May 18 2018 19:49:00 GMT-0400 (EDT)
+[debug] [2018-05-18T23:49:00.738Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2018-05-18T23:49:00.746Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-05-18T23:49:00.746Z] > authorizing via signed-in user
+[debug] [2018-05-18T23:49:00.748Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/wkny-2f816  
+  
+ Fri May 18 2018 19:49:00 GMT-0400 (EDT)
+[debug] [2018-05-18T23:49:01.141Z] <<< HTTP RESPONSE 200
+[debug] [2018-05-18T23:49:01.142Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/wkny-2f816/tokens  
+  
+ Fri May 18 2018 19:49:01 GMT-0400 (EDT)
+[debug] [2018-05-18T23:49:01.502Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Deploying to 'wkny-2f816'...
+[info] 
+[info] i  deploying hosting
+[info] i  hosting: preparing public directory for upload...
+[debug] [2018-05-18T23:49:02.993Z] >>> HTTP REQUEST PUT https://deploy.firebase.com/v1/hosting/wkny-2f816/uploads/-LCpe0oVr17re21S9I5S?fileCount=71&message=  
+  
+ Fri May 18 2018 19:49:02 GMT-0400 (EDT)
