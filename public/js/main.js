@@ -211,9 +211,27 @@ function initBetter() {
 /************************** WORSE *********************************************/
 /******************************************************************************/
 
+var numSpans;
 var worseEl
+var savedBB = false;
+var allowWorseStop = false;
+var worseMouseOut = false;
 
 var worseImagesInterval;
+
+function skewSpanEl(ind) {
+    window.requestAnimationFrame(function () {
+        var spanEl = document.getElementById("animSpan_" + ind);
+        spanEl.style.transform =
+            "rotate3d(0,0,1," + chance.integer({min: -90,max: 90}) + "deg)";
+        spanEl.style.webkitTransform =
+            "rotate3d(0,0,1," + chance.integer({min: -90,max: 90}) + "deg)";
+    });
+}
+
+function skewAllSpans() {
+    for (var i = 0; i < numSpans; i++) skewSpanEl(i);
+}
 
 function worseImagesStep() {
     var curImgInd = chance.integer({min:0,max:worseImages.length-1});
@@ -248,22 +266,74 @@ function worseImagesStep() {
 }
 
 function startWorse() {
+    if (savedBB) return;
+    document.getElementById("info").classList.add("fixWorse");
+    savedBB = worseEl.getBoundingClientRect();
+
+    document.getElementById("info").classList.add("fixWorse");
+
     if (!worseImagesInterval) {
         worseImagesStep();
         worseImagesInterval = setInterval(worseImagesStep, WORSE_CHANGE_TIMING);
     }
+
+    skewAllSpans();
+    worseMouseOut = false;
+    allowWorseStop = false;
+
+    if (!allowWorseStop) setTimeout(function () {
+        allowWorseStop = true;
+    }, 100);
 }
 
 function stopWorse(ev) {
-    clearInterval(worseImagesInterval);
-    worseImagesInterval = false;
-    overlayImgEl.classList.add("hidden");
+    if (savedBB) {
+        worseMouseOut = (ev.clientX < savedBB.left) || (ev.clientX > savedBB.left + savedBB.width) ||
+                  (ev.clientY < savedBB.top) || (ev.clientY > savedBB.top + savedBB.height);
+        if (worseMouseOut && allowWorseStop) {
+            document.getElementById("info").classList.remove("fixWorse");
+            clearInterval(worseImagesInterval);
+            worseImagesInterval = false;
+            overlayImgEl.classList.add("hidden");
+            for (var i = 0; i < numSpans; i++) {
+                var spanEl = document.getElementById("animSpan_" + i);
+                spanEl.style = null;
+            }
+            setTimeout(function () {savedBB = false}, 50);
+        }
+    }
 }
 
 function initWorse() {
+    textNodes = [...document.getElementById("infoText").childNodes];
+
+    numSpans = 0;
+
+    var replaceText = "";
+
+    for (var i = 0; i < textNodes.length; i++) {
+        if (!textNodes[i].tagName) {
+            var text = textNodes[i].textContent.trim();
+            var newText = "";
+            var tokens = text.split(/\s+/);
+            for (var j = 0; j < tokens.length; j++) {
+                var newSpan = document.createElement("span");
+                newSpan.id = "animSpan_" + numSpans;
+                newSpan.classList.add("animSpan");
+                newSpan.innerHTML = tokens[j] + " ";
+                newText += elementToString(newSpan);
+                numSpans++;
+            }
+            replaceText += newText;
+        }
+        else replaceText += elementToString(textNodes[i]) + " ";
+    }
+
+    document.getElementById("infoText").innerHTML = replaceText;
+
     worseEl = document.getElementsByClassName("worse")[0];
     worseEl.addEventListener("mouseenter",startWorse);
-    document.body.addEventListener("mouseout",stopWorse);
+    document.body.addEventListener("mousemove",stopWorse);
 }
 
 /******************************************************************************/
